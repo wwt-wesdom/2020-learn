@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style>
+    .slider {
+      position: relative;
+      width: 300px;
+      height: 50px;
+      background-color: #eee;
+      color: #fff;
+    }
+    .slider-active {
+      height: 100%;
+      width: 0;
+      background-color: red;
+    }
+    .touch-box {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 50px;
+      width: 50px;
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="slider-active"></div>
+    <div class="touch-box" id="touch-box"></div>
+  </div>
+  <script>
+    let start = 0;
+    let end = 0;
+    let endP = 0; // 最后位置
+    let touchBox = document.getElementById('touch-box');
+    touchBox.addEventListener('touchstart', function (e) {
+      start = e.targetTouches[0].clientX;
+      console.log('start', start);
+    });
+    touchBox.addEventListener('touchmove', function (e) {
+      let move = e.changedTouches[0].clientX;
+      let endX = endP  + (move - start);
+      if (endX >= 250) {
+        endX = 250
+      } else if (endX <= 0) {
+        endX = 0;
+      }
+      this.style.left = endX + 'px';
+      console.log(endX, 'endX');
+    });
+    touchBox.addEventListener('touchend', function (e) {
+      end = e.changedTouches[0].clientX ;
+      endP = endP + end - start;
+      if (endP >= 250) {
+        endP = 250
+      } else if (endP <= 0) {
+        endP = 0;
+      }
+      console.log('endP', endP);
+    });
+  </script>
+</body>
+</html>

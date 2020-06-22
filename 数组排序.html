@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组排序</title>
+</head>
+<body>
+<script>
+  function arrUniqueJson(arr) {
+    const unique = {};
+    arr.forEach(item => {
+      unique[JSON.stringify(item)] = item;
+    });
+    arr = Object.keys(unique).map(item => {
+      return JSON.parse(item)
+    });
+    return arr;
+  }
+  function arrUniqueSort(arr) {
+    arr.sort();
+    const newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== arr[i+1]) {
+        newArr.push(arr[i])
+      }
+    }
+    return newArr;
+  }
+  function arrUniqueIndexOf(arr) {
+    const newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (newArr.indexOf(arr[i]) < 0) {
+        newArr.push(arr[i])
+      }
+    }
+    return newArr;
+  }
+
+  function uniqueSplit(origin) {
+    let arr = [].concat(origin);
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] === arr[j]) {
+          arr.splice(j, 1);
+          j--;
+        }
+      }
+    }
+    return arr;
+  }
+
+  function Foo() {
+    getName = function () { alert (1); };
+    return this;
+  }
+  Foo.getName = function () { alert (2);};
+  Foo.prototype.getName = function () { alert (3);};
+  var getName = function () { alert (4);};
+  function getName() { alert (5);}
+
+  //请写出以下输出结果：
+  Foo.getName();
+  getName();
+  Foo().getName();
+  getName();
+  new Foo.getName();
+  new Foo().getName();
+  new new Foo().getName();
+</script>
+</body>
+</html>

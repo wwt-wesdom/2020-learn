@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>new</title>
+</head>
+<body>
+<script>
+function _new(fn, ...args) {
+  // 以构造函数的原型对象为原型创建新对象
+  const obj = Object.create(fn.prototype);
+  // 绑定this为obj apply第二个参数为数组，call为值 不绑定this this指向不会是obj 不会为新new的对象赋值
+  const ret = fn.apply(obj, args);
+  // 如果构造函数有返回值 则new操作符返回该值 否则返回创建的obj
+  return  ret instanceof Object ? ret : obj;
+}
+
+function Dog(name, age ,color) {
+ this.name = name;
+ this.age = age;
+ this.color = color;
+ return {
+   name: '小明',
+   age: 12,
+   des: '小明是永远滴神'
+ }
+}
+const dog1 = _new(Dog, 'dog', 12, 'yellow');
+console.log(dog1);
+</script>
+</body>
+</html>

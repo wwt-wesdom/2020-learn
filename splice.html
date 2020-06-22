@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button id="btn">click</button>
+<button id="btn1">rebind</button>
+<script>
+  // splice 方法
+  Array.prototype.mySplice = function (start, delNum) {
+    let newArr = [];
+    let result = [];
+    let thisArr = this;
+    let args = [].slice.call(arguments); // 伪数组转数组
+    if (args.length === 0) {
+      return [];
+    }
+    if (typeof delNum === 'undefined') { // 只有一个参数
+      for (let i = 0; i < thisArr.length; i++) {
+        if (i >= start) {
+          result.push(thisArr[i])
+        } else {
+          newArr.push(thisArr[i])
+
+        }
+      }
+    } else { // 两个或多个参数
+     if (delNum < 0) delNum = 0;
+      let arr1 = thisArr.slice(0, start);
+      let arr2 = thisArr.slice(start + delNum);
+      newArr = newArr.concat(arr1, args.slice(2), arr2);
+      result = thisArr.slice(start, delNum + start);
+    }
+    thisArr.length = 0;
+    for (let i = 0; i < newArr.length; i++) {
+      thisArr.push(newArr[i]);
+    }
+    return result;
+  };
+  let arr = [1,2,3,4,5];
+  let btn = document.getElementById('btn');
+  let btn1 = document.getElementById('btn1');
+  let one = false;
+  btn.onclick = function (e) {
+    console.log(one, '==============before==============');
+  };
+  btn1.onclick = function (e) {
+    one = !one;
+    btn.onclick = function (e) {
+      console.log(one, '============after============');
+    }
+  };
+
+</script>
+</body>
+</html>

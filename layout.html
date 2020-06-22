@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <title>layout</title>
+  <style>
+    /*flex*/
+    .box1 {
+      display: flex;
+      padding: 10px;
+      border: 1px solid #ddd;
+      align-items: center;
+    }
+
+    .box1 .left {
+      width: 60px;
+      height: 60px;
+      background-color: green;
+    }
+
+    .box1 .right {
+      padding-left: 10px;
+      flex: 1;
+    }
+
+    .box1 .right .title {
+      height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      font-size: 16px;
+    }
+
+    .box1 .right .date {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="box1">
+  <div class="left"></div>
+  <div class="right">
+    <div class="title">水水水水水水水水水水水水水水水水水水水水水水水水水水水水水</div>
+    <div class="date"><span>09:10</span></div>
+  </div>
+</div>
+</body>
+</html>

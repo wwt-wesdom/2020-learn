@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="js/require.js" data-main="js/main"></script>
+<script>
+  require.config({
+    baseUrl: "./js", // 配置根路径
+  });
+</script>
+<script>
+  /*
+  * 递归
+  * */
+  function permutate(str) {
+    let array = str.split('');
+    function loop(array, pre = []) {
+      if (array.length === 1) {
+        return [pre.concat(array).join('')];
+      }
+      let res = [];
+      for (let index = 0; index < array.length; index++) {
+        let first = array.pop();
+        res = res.concat(loop(array, [...pre, first]));
+        array.unshift(first);
+      }
+      console.log(1111);
+      return res;
+    }
+    return Array.from(new Set(loop(array)))
+  }
+  function digui(i) {
+    i --;
+    for (let j = 0; j <i; j++) {
+      console.log(1111);
+      digui(j)
+    }
+  }
+  // digui(10)
+  function sum(n) {
+    if (n===1) {
+      return 1;
+    }
+    return  n + sum(n - 1)
+  }
+  function getFib(x) {
+    if(x===1||x===2){
+      return 1
+    }
+    let a = getFib(x-1);
+    let b = getFib(x-2);
+    return a + b;
+  }
+/*  function jsonp() {
+    let script = document.createElement('script');
+    script.src = 'https://m.imooc.com/api/search/searchword';
+    document.body.insertBefore(script, document.body.firstChild);
+    function handleResponse(data) {
+      console.log(11111);
+      console.log(data);
+    }
+  }
+  jsonp();*/
+  function showData() {
+
+  }
+  // jsonp跨越得后端支持
+  /*$.ajax({
+    url: 'http://freegeoip.net/json',
+    type: 'GET',
+    dataType: "jsonp",  //指定服务器返回的数据类型
+   /!* jsonp:'callback',//用以获得jsonp回调函数名的参数名(默认为:callback)
+    jsonpCallback: "showData", //指定回调函数名称*!/
+    success: function (data) {
+      console.log(11111);
+      console.info("调用success");
+    }
+  });*/
+  let data = {
+    list: [1,2,3],
+    name: 'ald'
+  };
+  console.log(data);
+  data.list.shift();
+</script>
+</html>

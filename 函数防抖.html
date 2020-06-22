@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>函数防抖</title>
+</head>
+<body>
+<input type="text" id="inp">
+<div>
+  <p class="aaa"></p>
+  <p class="aaa"></p>
+  <p class="aaa"></p>
+  <p class="aaa"></p>
+  <p class="aaa"></p>
+</div>
+<script>
+  function debounce(fn) {
+    // this 指向window
+    let timeout = null; // 创建一个标记用来存放定时器的返回值
+    return function (number, number1, number2) {
+      // console.log(this); // this执行 inp
+      clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+      timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+        // console.log(this);
+        fn.apply(this, arguments);
+      }, 500);
+    };
+  }
+  function sayHi(...arg) {
+    console.log(arg);
+    // console.log(this);
+    console.log('防抖成功');
+  }
+
+  let inp = document.getElementById('inp');
+  let debounceFun = debounce(sayHi);
+  inp.addEventListener('input', function () {
+    debounceFun(1,2,3)
+  }); // 防抖
+
+  function test(...args) { // ...args 将arguments伪数组转数组
+    console.log(args);
+    console.log(args instanceof Array);
+    args.forEach(item => {
+      console.log(item);
+    })
+  }
+  let listP = document.getElementsByClassName('aaa');
+  test(...listP);
+</script>
+</body>
+</html>

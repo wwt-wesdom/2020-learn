@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>多数组取并集</title>
+</head>
+<body>
+<script>
+  const arr1 = [1, 2, 3];
+  const arr2 = [3, 2, 5];
+  const arr3 = [3, 6, 7];
+  const arr4 = [3, 2, 4, 8];
+  const handle = (...arr) => {
+    return arr.reduce((rst, ele, i) => {
+      return rst.filter(item => ele.includes(item));
+    });
+  };
+
+  console.log(handle(arr1, arr2, arr3, arr4));
+  function a(...args) {
+    console.log(args);
+  }
+  function myMap(callback) {
+    callback && callback(1,2,3);
+  }
+  myMap(function() {
+    console.log(arguments);
+  });
+  function myCall() {
+
+  }
+</script>
+</body>
+</html>

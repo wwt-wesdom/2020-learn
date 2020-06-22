@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="add"></div>
+<button id="btn">add</button>
+<script>
+  let num = 1;
+  function throttling(fn) {
+    let open = true;
+    return function () {
+      if (!open) return;
+      open = false;
+      setTimeout(() => {
+        open = true;
+      }, 1500);
+      fn.apply(this, arguments)
+    }
+  }
+  let btn = document.querySelector('#btn');
+  let add = document.querySelector('#add');
+  function addNum(...args) {
+    num += args[0];
+    add.innerHTML = num.toString();
+  }
+  let tFun = throttling(addNum);
+  btn.onclick = function () {
+    tFun(3);
+  };
+</script>
+</body>
+</html>
