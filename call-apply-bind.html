@@ -30,7 +30,7 @@ Function.prototype.myApply = function (obj = window, ...args) { // 如果不传�
   obj[symbol] = this; // 给传入的对象绑定属性symbol 值为 当前调用的函数
   const result = obj[symbol](...args[0]); // 调用函数
   delete obj[symbol]; // 删除绑定的属性
-  return result; // 返回调用函数的结果
+  return result; // 返回调用函数的结果g
 };
 function fn(a, b, c) {
   return {

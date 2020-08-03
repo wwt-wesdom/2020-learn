@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>递归</title>
+</head>
+<body>
+<script>
+
+  /**
+   * 数组扁平化
+   */
+
+  let arr = [1, 2, [3, 4, 5], [6, 7, [8, 9, [10, 11, 12]]]];
+  function flatArr(arr) {
+    let newArr = [];
+    arr.forEach(item => {
+      if (Array.isArray(item)) {
+        newArr = newArr.concat(flatArr(item));
+      } else {
+        newArr.push(item)
+      }
+    });
+    return newArr;
+  }
+  console.log(flatArr(arr));
+
+  function flatArrReduce(arr) {
+    return arr.reduce((result, item) => {
+      return result.concat(Array.isArray(item) ? flatArrReduce(item) : item);
+    }, [])
+  }
+
+  console.log(flatArrReduce(arr));
+
+  function flatArrWhile(arr) {
+    while (arr.some(Array.isArray)) {
+      arr = [].concat(...arr);
+    }
+    return arr;
+  }
+
+  console.log(flatArrWhile(arr));
+
+  function myPromise() {
+
+  }
+
+</script>
+</body>
+</html>
