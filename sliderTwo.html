@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Title</title>
+  <embed src="./audio/muisc.mp3" hidden="true" autostart="true" loop="true">
   <style>
     .slider {
       position: relative;
@@ -54,6 +55,9 @@
     <div class="touch-box" id="touch-box"></div>
     <div class="finish" id="finish">完成</div>
   </div>
+  <audio src="./audio/muisc.mp3" controls="controls" autoplay="autoplay">
+    Your browser does not support the audio element.
+  </audio>
   <script>
     function sliderMove() {
       let start = 0;
