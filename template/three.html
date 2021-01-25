@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  剩余<span class="count"></span>次抽奖次数
+  <button class="lottery">抽奖</button>
+</div>
+<script>
+  let initCount = 10;
+  document.querySelector('.count').innerHTML = initCount.toString();
+  let date = new Date();
+  let y = date.getFullYear().toString();
+  let m = (date.getMonth() + 1).toString();
+  let d = date.getDate().toString();
+  let key = y+m+d;
+  let count = window.localStorage.getItem(key);
+  if (count !== null && count !== undefined) {
+    initCount = parseInt(count);
+    document.querySelector('.count').innerHTML = initCount.toString();
+  }
+  document.querySelector('.lottery').onclick = function () {
+    initCount --;
+    if (initCount >= 0) {
+      document.querySelector('.count').innerHTML = initCount.toString();
+      window.localStorage.setItem(key, initCount)
+    } else {
+      alert('抽奖次数已用完')
+    }
+  }
+
+</script>
+</body>
+</html>

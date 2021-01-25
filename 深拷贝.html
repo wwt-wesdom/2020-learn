@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function simpleClone(target) {
+    // 判断是否是对象
+    if (typeof target === 'object' && target !== null) {
+      const cloneTarget = Array.isArray(target) ? [] : {} // 判断是否是数组
+      for (let key in target) {
+        if (target.hasOwnProperty(key)) {
+          cloneTarget[key] = target[key]
+        }
+      }
+      return cloneTarget;
+    } else {
+      return target;
+    }
+  }
+  let arr = [1,2,3,4,5,6,9,null,undefined,'','ssss', {a: {b: 1}, b: 1}];
+  let newArr = simpleClone(arr);
+
+
+  function deepClone(target) {
+    if (typeof target === 'object' && target !== null) {
+      const cloneTarget = Array.isArray(target) ? [] : {}; // 判断是否是数组
+      for (let key in target) {
+        if (target.hasOwnProperty(key)) {
+          cloneTarget[key] = deepClone(target[key])
+        }
+      }
+      return cloneTarget;
+    } else {
+      return target;
+    }
+  }
+  let newArr1 = deepClone(arr);
+  arr[arr.length - 1].b = 2;
+  console.log(newArr);
+  console.log(newArr1);
+
+  // 深拷贝，考虑特殊对象和循环引用
+  const isObject = (target) => (typeof target === 'object' || typeof target === 'function') && target !== null;
+  function deepDeepClone(target, map = new Map()) {
+    if (map.get(target)) {
+      return target;
+    }
+    // 检测当前对象target是否与 正则、日期格式对象匹配
+    let constructor = target.constructor;
+    if (/^(RegExp|Date)$/i.test(target.constructor.name)){
+      new constructor(target);
+    }
+
+    if (isObject(target)) {
+      map.set(target, true);
+      const cloneTarget = Array.isArray(target) ? [] : {}; // 判断是否是数组
+      for (let key in target) {
+        if (target.hasOwnProperty(key)) {
+          cloneTarget[key] = deepClone(target[key], map)
+        }
+      }
+      return cloneTarget;
+    } else {
+      return target;
+    }
+  }
+</script>
+</body>
+</html>

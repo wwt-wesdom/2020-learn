@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>class</title>
+</head>
+<body>
+<input type="text" id="input">
+<button onclick="submit()">提交</button>
+<div id="value">
+  dfasdfsafd
+</div>
+<div>
+  <section>
+    <el-row :span="24">
+      <el-col :span="24" class="toolbar grayadd" style="padding-bottom: 0px;">
+        <el-form :model="infoForm" label-width="100px">
+          <el-col :span="12">
+            <el-form-item class="survery-title" label="App名称"><span v-html="showName(infoForm.appId)"></span>
+            </el-form-item>
+
+            <el-form-item class="survery-title" label="平台"><span>{{infoForm.platform}}</span></el-form-item>
+
+            <el-form-item label="版本号：" class="survery-title"><span>v{{infoForm.grayVersion}}</span></el-form-item>
+
+            <el-form-item label="下载地址：" class="survery-title"><span>{{infoForm.downloadAddr}}</span></el-form-item>
+
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item class="survery-title" label="用户群组"><span v-text="showGroup(infoForm.groupId)"></span>
+            </el-form-item>
+
+            <el-form-item label="升级提示：" class="survery-title"><span>{{infoForm.remind}}</span></el-form-item>
+
+            <el-form-item label="版本说明：" class="survery-title"><span>{{infoForm.note}}</span></el-form-item>
+
+          </el-col>
+
+        </el-form>
+
+      </el-col>
+
+    </el-row>
+
+  </section>
+
+
+</div>
+
+<script>
+  function submit() {
+    let a = document.getElementById('input');
+    console.log(a.value);
+    let b = document.getElementById('value');
+    b.innerHTML = eval(a.value);
+  }
+
+  class Parent {
+    _count = 0; // 直接定义变量
+    #count = 0; // 变量前加#表示私用变量
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.b = 5;
+    }
+
+    get ownValue() {
+      return this.#count;
+    }
+
+    set ownValue(val) { // ownValue非函数，是实例的一个属性，用于拦截属性的读取和设置
+      this.#count++;
+    }
+
+    sum() {
+      return this.x + this.y;
+    }
+
+    toSting() {
+
+    }
+  }
+
+  let p = new Parent(1, 2);
+  console.log(p.ownValue, 'before---------');
+  p.ownValue = 8;
+  console.log(p.ownValue, 'after----------');
+  console.log(p.sum());
+
+  class Child extends Parent {
+    constructor() {
+      super();
+      // console.log(super());
+    }
+
+    parentMethod() {
+      return super.sum();
+    }
+  }
+
+  let c = new Child;
+  console.log(c.parentMethod());
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+  let str = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit';
+  let arr = [];
+  let pos = str.indexOf('e');
+  while (pos >= 0) {
+    arr.push(pos);
+    pos = str.indexOf('e', pos + 1)
+  }
+  /*for (let i = 0; i < str.length; i++) {
+    if (str[i] === 'e') {
+      arr.push(i)
+    }
+  }*/
+  console.log(arr);
+  let o1 = {
+    a: 1,
+    say(name) {
+      console.log(name);
+    }
+  };
+
+  // o1.say.call(o1, 'xiaoli');
+
+  // console.log(Math.min.apply(Math, [1, 2, 3, 4, 5]));
+
+  let person = {_name: 'xiaohong'};
+  Object.defineProperty(person, 'name', {
+    configurable: false,
+    get() {
+      console.log('get');
+    },
+    set(v) {
+      console.log('set');
+      this.value = v;
+    }
+  });
+  let name = Object.getOwnPropertyDescriptor(person, '_name');
+  console.log(name.value);
+
+
+</script>
+</html>

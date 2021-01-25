@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>拖拽</title>
+  <style>
+    body {
+      background-color: darksalmon;
+    }
+
+    .empty {
+      display: inline-block;
+      height: 160px;
+      width: 160px;
+      background-color: #fff;
+      margin: 5px;
+      border: 3px solid salmon;
+    }
+
+    .fill {
+      background-image: url("https://source.unsplash.com/random/150x150");
+      position: relative;
+      height: 150px;
+      width: 150px;
+      top: 5px;
+      left: 5px;
+      cursor: pointer;
+    }
+    .clone-fill {
+      background-image: url("https://source.unsplash.com/random/150x150");
+      height: 150px;
+      width: 150px;
+      cursor: pointer;
+    }
+    .hold {
+      border: solid 5px #ccc;
+    }
+
+    .hovered {
+      background: #f4f4f4;
+      border-style: dashed;
+    }
+    .box {
+      border: 1px solid red;
+      width: 600px;
+      min-height: 600px;
+    }
+  </style>
+</head>
+<body>
+<div class="empty">
+  <div class="fill" draggable="true"></div>
+</div>
+<div class="empty">
+  <div class="fill" draggable="true"></div>
+</div>
+<div class="empty">
+  <div class="fill" draggable="true"></div>
+</div>
+<div class="empty">
+  <div class="fill" draggable="true"></div>
+</div>
+<div class="empty">
+  <div class="fill" draggable="true"></div>
+</div>
+<div class="box"></div>
+<div class="clone-fill"></div>
+<script>
+  const fill = document.querySelector('.fill');
+  const empties = document.querySelectorAll('.empty');
+  const box = document.querySelector('.box');
+  const cloneFill = document.querySelector('.clone-fill');
+  
+  fill.addEventListener('dragstart', dragStart);
+  fill.addEventListener('dragend', dragEnd);
+
+
+  for (const item of empties) {
+    item.addEventListener('dragover', dragOver);
+    item.addEventListener('dragenter', dragEnter);
+    item.addEventListener('dragleave', dragLeave);
+    item.addEventListener('drop', dragDrop);
+  }
+  box.addEventListener('dragover', dragOver);
+  box.addEventListener('dragenter', dragEnter);
+  box.addEventListener('dragleave', dragLeave);
+  box.addEventListener('drop', dragDrop);
+  
+  function dragStart(e) {
+    console.log('dragStart');
+  }
+  function dragEnd() {
+    console.log('dragEnd');
+  }
+  function dragOver(e) {
+    e.preventDefault();
+    console.log('dragOver');
+  }
+  function dragEnter(e) {
+    e.preventDefault();
+    console.log('dragEnter');
+  }
+  function dragLeave() {
+    console.log('dragLeave');
+  }
+  function dragDrop() {
+    console.log('dragDrop');
+    /*const cloneFill = fill.cloneNode(true);
+    cloneFill.className = 'clone-fill';
+    cloneFill*/
+    this.append(cloneFill.cloneNode())
+  }
+
+
+</script>
+</body>
+</html>
+
