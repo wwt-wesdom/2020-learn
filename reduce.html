@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>reduce</title>
+</head>
+<body>
+<script>
+  Array.prototype.myReduce = function (fn, initValue) {
+    let arr = this,
+        len = arr.length,
+        args = arguments[2] || window,
+        item;
+    for (let i = 0; i < len; i++) {
+      item = arr[i];
+      initValue = fn.call(args, initValue, item, i, arr)
+    }
+    return initValue;
+  };
+  let arr = [1,2,3,4,5,6];
+  let value = arr.myReduce((pre, item, index) => {
+    pre += item;
+    return pre
+  }, 0);
+  console.log(value);
+</script>
+</body>
+</html>

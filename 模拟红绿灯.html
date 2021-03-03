@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .light {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      background-color: #cccccc;
+    }
+    .red {
+      background-color: red;
+    }
+    .yellow {
+      background-color: yellow;
+    }
+    .green {
+      background-color: green;
+    }
+    .pass {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <span class="light red"></span>
+  <span class="light red"></span>
+  <span class="light red"></span>
+</div>
+<script>
+  function awaitTime(time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, time)
+    })
+  }
+  const lights = document.querySelectorAll('.light');
+  function setColor(val) {
+    lights.forEach(item => {
+      item.className = `light ${val}`
+    })
+  }
+  async function changeColor() {
+    await awaitTime(5000);
+    setColor('yellow');
+    await awaitTime(3500);
+    setColor('green');
+    await awaitTime(1500);
+    setColor('red');
+    await changeColor();
+  }
+  changeColor();
+
+  let obj = {
+    b: 10,
+    a: {
+      c: () => {
+        console.log(this);
+        return this.b * 2
+      }
+    }
+  };
+  console.log(obj.a.c());
+  function Test (){
+    let a = 1;
+    let b = {
+      c: () => {
+        console.log(this);
+        return this.a * 2
+      }
+    }
+  }
+  let d = new Test();
+  console.log(d);
+</script>
+</body>
+</html>

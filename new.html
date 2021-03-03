@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>new</title>
+  <style>
+    :root {
+      --width100: 100px;
+    }
+    .test {
+      background-color: red;
+      width: var(--width100);
+      height: 100px;
+    }
+  </style>
 </head>
 <body>
+<div class="test">
+
+</div>
 <script>
 function _new(fn, ...args) { // ...args 剩余参数语法
   console.log(args);
