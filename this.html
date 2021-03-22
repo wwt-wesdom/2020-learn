@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>this</title>
+</head>
+<body>
+<script>
+  function foo() {
+    return (a) => {
+      console.log(this.a);
+    }
+  }
+
+  let obj1 = {
+    a: 2
+  };
+
+  let obj2 = {
+    a: 3
+  };
+
+  let bar = foo.call(obj2);
+  bar.call(obj2);
+
+  function test1() {
+    let a = 2;
+    let obj3 = {
+      a: 1,
+      go: () => {
+        console.log(this.a, 'aaaaaaaaa');
+      }
+    };
+    obj3.go();
+  }
+  test1.call(obj2);
+  class test2 {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    test3() {
+      return () => {
+        console.log(this.name);
+      }
+    }
+  }
+  let obj4 = new test2('tom', 12);
+  obj4.test3()();
+  console.log(obj4);
+  let obj5 = {
+    a: 5,
+    getA() {
+      return () => {
+        console.log(this.a);
+      }
+    }
+  };
+  obj5.getA()();
+</script>
+</body>
+</html>

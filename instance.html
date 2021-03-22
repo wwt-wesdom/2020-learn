@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>instance</title>
+</head>
+<body>
+<script>
+  /**
+   * instanceof 用于判断对象是否是某一构造函数的实例
+   * 左边可以是任何值，右边只能是函数
+   */
+  let str1 = 'aaaaaa';
+  console.log(str1 instanceof String); // false
+  let str2 = new String('bbbbbbbbb');
+  console.log(str2 instanceof String); //true
+  function Person() {
+    this.name = 'jim'
+  }
+  let p1 = new Person();
+  console.log(p1 instanceof Person); // true
+  console.log(undefined instanceof Object); // false
+  console.log(null instanceof Object); // false
+  console.log(typeof null)
+
+</script>
+</body>
+</html>

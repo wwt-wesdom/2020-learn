@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>proxy</title>
+</head>
+<body>
+<script>
+  let person = {
+    name: 'tom',
+    age: 18
+  };
+  const proxy = new Proxy(person, {
+    get(target, property, receiver) {
+      console.log(`正在访问${property}属性`);
+      return target[property]
+    }
+  });
+  console.log(proxy.name);
+  console.log(proxy.age);
+</script>
+</body>
+</html>
