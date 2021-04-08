@@ -3,9 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    .main {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    }
+    .content {
+      flex: 1;
+      overflow-y: scroll;
+    }
+    .bottom {
+      height: 50px;
+      background-color: red;
+    }
+  </style>
 </head>
 <body>
+<div class="main">
+  <div class="content">
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+    <p>内容内容啦啦啦啦啦啦啦啦啦</p>
+  </div>
+  <div class="bottom">
 
+  </div>
+</div>
 </body>
 <script src="js/require.js" data-main="js/main"></script>
 <script>
@@ -87,5 +151,12 @@
   };
   console.log(data);
   data.list.shift();
+
+
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then()
+    .catch(e => {
+      console.log(e);
+    })
 </script>
 </html>

@@ -9,20 +9,33 @@
   /**
    * instanceof 用于判断对象是否是某一构造函数的实例
    * 左边可以是任何值，右边只能是函数
+   * 它可以判断一个实例是否是其父类型或者祖先类型的实例。
    */
-  let str1 = 'aaaaaa';
-  console.log(str1 instanceof String); // false
-  let str2 = new String('bbbbbbbbb');
-  console.log(str2 instanceof String); //true
-  function Person() {
-    this.name = 'jim'
-  }
-  let p1 = new Person();
-  console.log(p1 instanceof Person); // true
-  console.log(undefined instanceof Object); // false
-  console.log(null instanceof Object); // false
-  console.log(typeof null)
+  // let str1 = 'aaaaaa';
+  // console.log(str1 instanceof String); // false
+  // let str2 = new String('bbbbbbbbb');
+  // console.log(str2 instanceof String); //true
+  // function Person() {
+  //   this.name = 'jim'
+  // }
+  // let p1 = new Person();
+  // console.log(p1 instanceof Person); // true
+  // console.log(undefined instanceof Object); // false
+  // console.log(null instanceof Object); // false
+  // console.log(typeof null)
+  function Person1() {
 
+  }
+  function Person2() {
+
+  }
+  Person1.prototype = new Person2(); // 继承
+  let o1 = new Person1();
+  let o2 = new Person2();
+
+  let o3 = new Person1();
+  console.log(o1 instanceof Person1);
+  console.log(o1 instanceof Person2);
 </script>
 </body>
 </html>

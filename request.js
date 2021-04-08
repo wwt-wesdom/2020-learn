@@ -56,3 +56,8 @@ function request(options) {
     xhr.send(data);
   })
 }
+
+function httpRequest(options) {
+  const xhr = new XMLHttpRequest();
+  xhr.open(options.method, options.url)
+}

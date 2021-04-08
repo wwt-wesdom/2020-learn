@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Map</title>
+</head>
+<body>
+<script>
+  let map = new Map();
+  map.set('one', 1);
+  map.set('two', 2);
+  console.log(map.get('one'));
+  [...map.keys()].forEach(key => {
+    console.log(key);
+  });
+  console.log(map);
+</script>
+</body>
+</html>

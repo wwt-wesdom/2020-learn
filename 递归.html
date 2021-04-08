@@ -23,7 +23,6 @@
     });
     return newArr;
   }
-  console.log(flatArr(arr));
 
   function flatArrReduce(arr) {
     return arr.reduce((result, item) => {
@@ -31,7 +30,6 @@
     }, [])
   }
 
-  console.log(flatArrReduce(arr));
 
   function flatArrWhile(arr) {
     while (arr.some(Array.isArray)) {
@@ -40,12 +38,23 @@
     return arr;
   }
 
-  console.log(flatArrWhile(arr));
-
-  function myPromise() {
-
+  /**
+   * 一共有n格，每步可以走1格或者2格，问一共有多少走法
+   *  首先分解问题是第n格可以是前面n-1格走的，也可能是n-2格走的。所以fn(n) = f(n-1) + f(n-2)。
+   *  也要知道终止条件是只有1步，那么只有一步的可能情况是还有1格，也可能是还有2格
+   */
+  function step(n) {
+    debugger
+    if(n>2){
+      return step(n-1) + step(n-2)
+    } else if(n===2)   {
+      return 2
+    } else {
+      return 1
+    }
   }
 
+  console.log(step(5));
 </script>
 </body>
 </html>
