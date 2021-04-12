@@ -33,6 +33,10 @@
   <div>
     <span style="background-color: red;">左边</span><span style="background-color: green;">右边</span>
   </div>
+  <div>
+    <img src="" alt="">
+    啦啦啦啦啦零零零零
+  </div>
 </body>
 <script>
   const el = document.querySelector('#dragBox');
@@ -55,5 +59,14 @@
     val = Number(val);
     return val !== val;
   }
+  let str = `<div>
+    lafldskfaskdf
+    <img src="" alt="">
+    啦啦啦啦啦零零零零
+    <img src="" alt="">
+  </div>`
+  const reg1 = /<img\b.*?(?:\>|\/>)/g;
+  let str1 = str.replace(reg1, '[图片]');
+  console.log(str1);
 </script>
 </html>

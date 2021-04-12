@@ -6,6 +6,7 @@
 </head>
 <body>
 <input type="text" id="inp">
+<button id="button">防抖</button>
 <div>
   <p class="aaa"></p>
   <p class="aaa"></p>
@@ -14,7 +15,12 @@
   <p class="aaa"></p>
 </div>
 <script>
-  function debounce(fn) {
+  /**
+   * 防抖，持续触发只执行最后一次
+   * @param fn
+   * @return {function(...[*]=)}
+   */
+  function debounce(that, fn) {
     // this 指向window
     let timeout = null; // 创建一个标记用来存放定时器的返回值
     return function (number, number1, number2) {
@@ -22,7 +28,7 @@
       clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
       timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
         // console.log(this);
-        fn.apply(this, arguments);
+        fn.apply(that, arguments);
       }, 500);
     };
   }
@@ -33,12 +39,12 @@
   }
 
   let inp = document.getElementById('inp');
-  let debounceFun = debounce(sayHi);
+  let debounceFun = debounce(this, sayHi);
   inp.addEventListener('input', function () {
     debounceFun(1,2,3)
   }); // 防抖
 
-  function test(...args) { // ...args 将arguments伪数组转数组
+  /*function test(...args) { // ...args 将arguments伪数组转数组
     console.log(args);
     console.log(args instanceof Array);
     args.forEach(item => {
@@ -46,7 +52,12 @@
     })
   }
   let listP = document.getElementsByClassName('aaa');
-  test(...listP);
+  test(...listP);*/
+
+  let button = document.querySelector('#button');
+  button.addEventListener('click', function () {
+    debounceFun();
+  })
 </script>
 </body>
 </html>

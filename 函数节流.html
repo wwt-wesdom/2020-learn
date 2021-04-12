@@ -9,6 +9,11 @@
 <button id="btn">add</button>
 <script>
   let num = 1;
+  /**
+   * 函数节流，函数立即执行，这指定时间内不在执行，过了时间指定以后再执行
+   * @param fn
+   * @return {function(...[*]=)}
+   */
   function throttling(fn) {
     let open = true;
     return function () {
