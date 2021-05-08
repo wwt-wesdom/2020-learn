@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>下划线跟随</title>
+  <style>
+    ul, li {
+      list-style: none;
+    }
+    ul {
+      display: flex;
+      position: absolute;
+      width: 800px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    li {
+      position: relative;
+      padding: 20px;
+      font-size: 24px;
+      color: #000;
+      line-height: 1;
+      transition: 0.2s all linear;
+      cursor: pointer;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 0;
+      height: 100%;
+      border-bottom: 2px solid #000;
+      transition: 0.2s all linear;
+    }
+
+    li:hover::before {
+      width: 100%;
+      top: 0;
+      left: 0;
+      transition-delay: 0.1s;
+      border-bottom-color: #000;
+      z-index: -1;
+    }
+
+    li:hover ~ li::before {
+      left: 0;
+    }
+
+    li:active {
+      background: #000;
+      color: #fff;
+    }
+    .nav {
+      display: flex;
+    }
+    .nav .nav-left, .nav. .nav-right {
+      width: 100px;
+      background-color: #000;
+      color: white;
+    }
+    .overflow-box {
+      flex: 1;
+      /*overflow-x: scroll;*/
+      white-space: nowrap;
+    }
+    .overflow-box span {
+      display: inline-block;
+      padding: 10px;
+    }
+    .clear-scroll::-webkit-scrollbar{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>第一条</li>
+    <li>下划线跟随</li>
+    <li>啦啦啦</li>
+    <li>最右边</li>
+  </ul>
+<div class="nav">
+  <div class="nav-left">左边</div>
+  <div class="overflow-box clear-scroll">
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+    <span>1111111</span>
+  </div>
+  <div class="nav-right">右边</div>
+</div>
+</body>
+</html>
