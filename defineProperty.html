@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style></style>
+</head>
+<body>
+<script>
+  class Vue {
+    constructor(options) {
+      this._data = options.data;
+      observer(this._data);
+      new Watcher();
+    }
+  }
+
+  function observer(value) {
+    if (!value || typeof value !== 'object') {
+      return
+    }
+    Object.keys(value).forEach(key => {
+      defineReactive(value, key, value[key])
+    });
+  }
+
+  function cb(value) {
+    console.log('更新视图');
+  }
+
+  function defineReactive(obj, key, value) {
+    const dep = new Dep();
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get() {
+        dep.addSub(Dep.target);
+        return value;
+      },
+      set(newValue) {
+        if (newValue === value) return;
+        value = newValue;
+        // cb(newValue)
+        dep.notify()
+      }
+    })
+  }
+
+  class Dep {
+    constructor() {
+      this.subs = [];
+    }
+    addSub(sub) {
+      this.subs.push(sub)
+    }
+    notify() {
+      this.subs.forEach(sub => {
+        sub.update();
+      })
+    }
+  }
+
+  class Watcher {
+    constructor() {
+      Dep.target = this;
+    }
+    update() {
+      console.log('视图更新了');
+    }
+  }
+  let obj = {
+    name: '小明',
+    age: 12
+  };
+  new Vue({
+    data: obj
+  });
+  obj.age = 15;
+</script>
+</body>
+</html>
