@@ -12,6 +12,7 @@
   </div>
 </body>
 <script>
+  const func = require('./js/math.js');
   let input = document.getElementById('input');
   let message = document.getElementById('message');
   input.addEventListener('input', function () {
@@ -21,6 +22,7 @@
   let num2 = 2;
   let sum = num1 + num2;
   let obj = {};
+  func.go();
   Object.defineProperty(obj, 'num', {
     get() {
       return sum

@@ -1,15 +1,5 @@
-
-define(function (){
-
-  let add = function (x,y){
-
-    return x+y;
-
-  };
-
-  return {
-
-    add: add
-  };
-
-});
+module.exports = {
+  go() {
+    alert('gooooooooo')
+  }
+}

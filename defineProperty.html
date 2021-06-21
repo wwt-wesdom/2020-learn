@@ -5,10 +5,81 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Title</title>
-  <style></style>
+  <style>
+    .wrapper {
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    details {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    summary {
+      background: #f2f2f2;
+      cursor: pointer;
+      padding: 15px;
+    }
+
+    p {
+      padding: 15px;
+      margin: 0;
+      background: #f2f2f2;
+    }
+  </style>
 </head>
 <body>
+<form>
+  <fieldset>
+    <legend>Choose your favorite language</legend>
+
+    <input type="radio" id="javascript" name="language">
+    <label for="javascript">JavaScript</label><br/>
+
+    <input type="radio" id="python" name="language">
+    <label for="python">Python</label><br/>
+
+    <input type="radio" id="java" name="language">
+    <label for="java">Java</label>
+  </fieldset>
+</form>
+
+<label for="volume">Volume: </label>
+<input type="range" id="volume" name="volume" min="0" max="20">
+
+<label for="result">Your choice: </label>
+<input type="number" id="result" name="result">
+
+<div class="wrapper">
+  <details>
+    <summary>
+      Click me to see more details
+    </summary>
+
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut eum perferendis eius. Adipisci velit et similique earum quas illo odio rerum optio, quis, expedita assumenda enim dicta aliquam porro maxime minima sed a ullam, aspernatur corporis.
+    </p>
+  </details>
+</div>
+
+<div>
+  <a href='http://123.60.38.94/img/dlrb.d2d71cb4.jpg' download="dlrb.jpg">
+    Download
+  </a>
+  <a href="https://geekjc-img.geekjc.com/logo.png" download="logo.png">下载图片</a>
+</div>
+<div>
+  <button onclick="copyToClipboard('啦啦啦啦啦')">复制到剪切板</button>
+</div>
+
 <script>
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+  }
+
+
   class Vue {
     constructor(options) {
       this._data = options.data;
