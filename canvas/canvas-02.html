@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style>
+    #canvas {
+      width: 600px;
+      height: 600px;
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    let canvas = document.getElementById('canvas');
+    canvas.width = 600;
+    canvas.height = 600;
+    let context = canvas.getContext('2d');
+
+    /*context.rect(100,100,400,400);
+
+    //添加渐变线
+    let grd = context.createLinearGradient(100,500,500,500);
+
+    //添加颜色断点
+    grd.addColorStop(0,"red");
+    // grd.addColorStop(0.5,"white");
+    grd.addColorStop(1,"yellow");
+
+    //应用渐变
+    context.fillStyle = grd;
+
+    context.fill();*/
+
+    //添加渐变线
+    let grd = context.createRadialGradient(300,300,100,300,300,200);
+
+    //添加颜色断点
+    grd.addColorStop(0,"olive");
+    grd.addColorStop(0.25,"maroon");
+    grd.addColorStop(0.5,"aqua");
+    grd.addColorStop(0.75,"fuchsia");
+    grd.addColorStop(1,"teal");
+
+    //应用渐变
+    context.fillStyle = grd;
+
+    context.fillRect(100,100,400,400);
+  </script>
+</body>
+</html>

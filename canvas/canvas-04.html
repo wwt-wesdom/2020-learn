@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>圆角矩形绘制</title>
+  <style>
+    #canvas {
+      width: 600px;
+      height: 600px;
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas">清使用chrome浏览器</canvas>
+<script>
+  let canvas = document.getElementById('canvas');
+  // drawRoundRect(context, 100, 100 , 400, 400, 25);
+ /* context.fillStyle = 'yellow';
+  context.fill();
+  context.stroke();*/
+  let img = new Image();
+  img.src = '../image/lucky.jpg';
+  img.onload = function() {
+    canvas.width =  img.width;
+    canvas.height = img.height;
+    let context = canvas.getContext('2d');
+   /* img.width = 400;
+    img.height = 400;*/
+    drawRoundRect(context, 0, 0 , img.width, img.height, 50);
+    context.fillStyle = context.createPattern(img, 'repeat');
+    context.strokeStyle = '#fff';
+    // context.fillRect(100,100,400,400);
+    context.fill();
+    context.stroke();
+  }
+
+
+  function drawRoundRect(context, x, y, width, height, radius) {
+    context.beginPath();
+    context.arc(x + radius, y + radius, radius, Math.PI, Math.PI*3/2);
+    context.lineTo(x + width - radius, y);
+    context.arc(x + width - radius, y + radius, radius, Math.PI*3/2, Math.PI*2);
+    context.lineTo(x + width, y + height - radius);
+    context.arc(x+ width - radius, y + height - radius, radius, 0, Math.PI/2);
+    context.lineTo(x + radius, y + height);
+    context.arc(x + radius, y + height - radius, radius, Math.PI/2, Math.PI);
+    context.closePath();
+  }
+
+</script>
+</body>
+</html>
