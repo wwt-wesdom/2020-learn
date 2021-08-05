@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>最长字串</title>
+  <style>
+  </style>
+</head>
+<body>
+<script>
+  let str = 'asdjklbnmzlasdfksaldfupwqourwo';
+  let map = [];
+  let result = [];
+  for (let i = 0; i < str.length; i++) {
+    if (result.includes(str[i])) {
+      map.push({
+        value: [...result].join(''),
+        length: result.length
+      });
+      result = [];
+    } else {
+      result.push(str[i])
+    }
+  }
+  map.sort((a, b) => b.length - a.length);
+  console.log(map);
+
+
+  function lengthOfLongestSubstring(str) {
+    if (str === "") return null;
+    let start = 0, maxLen = 0, resStr = null;
+    const map = new Map();
+    const len = str.length;
+    for(let i = 0; i < len; i++) {
+      const c = str[i];
+      if (map.has(c)) {
+        start = Math.max(map.get(c) + 1, start);
+      }
+      map.set(c, i);
+      // 当前差值大于maxLen的时候记录下来子串
+      if (i - start + 1 > maxLen) {
+        resStr = str.slice(start, i + 1);
+      }
+      maxLen = Math.max(i - start + 1, maxLen);
+    }
+    return resStr;
+  }
+
+  console.log(lengthOfLongestSubstring(str));
+</script>
+</body>
+</html>
