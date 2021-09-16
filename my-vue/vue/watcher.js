@@ -14,6 +14,7 @@ class Watcher {
     // 还有一点就是 vm[key] 这个时候就触发了 get 方法
     // 之前在 get 把 观察者 通过dep.addSub(Dep.target) 添加到了 dep.subs中
     this.oldValue = vm[key]
+    console.log(this.oldValue);
     // Dep.target 就不用存在了 因为上面的操作已经存好了
     Dep.target = null
   }
@@ -21,8 +22,8 @@ class Watcher {
   update() {
     // 获取新值
     let newValue = this.vm[this.key]
-    // 比较旧值和新值
-    if (newValue === this.oldValue) return
+    // 比较旧值和新值 此处有问题, 旧的值在实例化时赋值，当新值等于this.oldValue, 而真是的oldValue 不等于 this.oldValue时无法更新
+    // if (newValue === this.oldValue) return
     // 调用具体的更新方法
     this.cb(newValue)
   }

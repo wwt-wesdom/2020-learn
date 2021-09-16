@@ -41,6 +41,8 @@ class Observer {
       // 设置值
       set(newValue) {
         // 判断旧值和新值是否相等
+        console.log(value, 'oldValue');
+        console.log(newValue, 'newValue');
         if (newValue === value) return
         // 设置新值
         value = newValue

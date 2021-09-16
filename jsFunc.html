@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style></style>
+</head>
+<body>
+<div>
+  <input type="text" id="inputOne">
+  <select name="" id="">
+    <option label="愿意" value="愿意"></option>
+    <option label="不愿意" value="不愿意"></option>
+  </select>
+</div>
+<script>
+  Object.assign2 = function (target, ...source) {
+    if (target === null) {
+      throw new TypeError('Cannot convert undefined or null to object')
+    }
+    let result = Object(target);
+    source.forEach(obj => {
+      if (obj !== null) {
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            result[key] = obj[key];
+          }
+        }
+      }
+    });
+    return result;
+  };
+  let o1 = Object.assign2({}, {a: 1, b: 2}, {c: 3}, {d: 4}, 5);
+  // console.log(o1);
+
+
+  /**
+   * 原理：利用Obj.key实现this绑定到目标对象，将函数绑定到目标对象的属性上，该属性需唯一
+   * 默认目标对象为window
+   */
+  Function.prototype.myCall = function (context = window, ...args) {
+    let key = Symbol('key');
+    context[key] = this;
+    const result = context[key](...args);
+    delete context[key];
+    return result;
+  };
+
+  let name = '迪丽热巴';
+  let obj = {name: '刘亦菲'};
+
+  function sayHi() {
+    let name = '杨幂';
+    console.log(`Hi ${this.name}`)
+  }
+
+  sayHi.myCall(obj);
+
+
+  /**
+   * @param a
+   * @param b
+   * @return {boolean}
+   * 遍历left的原型链上的原型对象，当有等于right的prototype时返回true
+   */
+  function myInstanceof(a, b) {
+    let left = Object.getPrototypeOf(a);
+    let right = b.prototype;
+    while (true) {
+      if (!left) {
+        return false;
+      }
+      if (left === right) {
+        return true
+      }
+      left = Object.getPrototypeOf(left)
+    }
+  }
+
+  /**
+   * @param obj
+   */
+  function myCreate(obj) {
+    function C() {
+    }
+
+    C.prototype = obj;
+    return new C();
+  }
+
+  let obj1 = myCreate({a: 1});
+
+  function sleep(time) {
+    let start = Date.now();
+    while (Date.now() - start < time) {
+      continue;
+    }
+  }
+
+  function sleepTwo(time) {
+    return new Promise(resolve => {
+      setTimeout(resolve, time)
+    })
+  }
+
+  async function testSleep() {
+    console.log(1111111);
+    await sleepTwo(2000);
+    console.log(22222222);
+  }
+
+  testSleep();
+
+
+  function ajax(url, method, body, headers) {
+    return new Promise((resolve, reject) => {
+      let req = new XMLHttpRequest();
+      req.open(methods, url);
+      for (let key in headers) {
+        req.setRequestHeader(key, headers[key])
+      }
+      req.onreadystatechange(() => {
+        if (req.readystate == 4) {
+          if (req.status >= '200' && req.status <= 300) {
+            resolve(req.responeText)
+          } else {
+            reject(req)
+          }
+        }
+      });
+      req.send(body)
+    })
+  }
+
+  /**
+   * @param fn
+   * @param time
+   * @return {function(...[*]=)}
+   * 防抖函数，连续触发在最后一次执行方法
+   */
+  function debounce(fn, time) {
+    let timer = null;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn(...args);
+      }, time)
+    }
+  }
+
+  function debounceTwo(fn, time) {
+    let lock = true;
+    return function (...args) {
+      if (lock) {
+        lock = false;
+        setTimeout(() => {
+          lock = true;
+        }, time);
+        fn(...args)
+      }
+    }
+  }
+
+  /**
+   * 节流：一定时间内只执行一次
+   */
+  let throttle = (fn, time = 1000) => {
+    let flag = true;
+    return function (...args) {
+      if (flag) {
+        flag = false;
+        setTimeout(() => {
+          flag = true;
+          fn(...args)
+        }, time)
+      }
+    }
+  };
+
+  function inputChange(e) {
+    console.log(e.target.value);
+  }
+
+
+  let inputOne = document.getElementById('inputOne');
+  inputOne.addEventListener('input', debounce(inputChange, 1000));
+
+
+  function sumFn(a, b, c) {
+    return a + b + c
+  }
+
+  let sum = curry(sumFn);
+  // sum(2)(3)(5); //10
+  // sum(2, 3)(5); //10
+  function curry(fn, ...args) {
+    let fnLen = fn.length,
+      argsLen = args.length;
+    console.log(fnLen);
+    console.log(argsLen);
+    //对比函数的参数和当前传入参数
+    //若参数不够就继续递归返回curry
+    //若参数够就调用函数返回相应的值
+    if (fnLen > argsLen) {
+      return function (...arg2s) {
+        return curry(fn, ...args, ...arg2s)
+      }
+    } else {
+      return fn(...args)
+    }
+  }
+
+  // alert('抽象出我的爱在你心里')
+  // alert('你若愿意')
+  // alert('我便爱你至天长地久')
+
+</script>
+</body>
+</html>

@@ -9,6 +9,53 @@
 </head>
 <body>
 <div id="app">
+  <div>
+
+
+
+  </div>
+
+
+  <tzt-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+    <tzt-form label-position="right" :inline="true" :model="filters" class="search-condition-box" label-width="110px">
+      <div style="float:right" >
+        <tzt-filter-item>
+
+        </tzt-filter-item>
+      </div>
+      <tzt-filter-item style="position: absolute !important;left:90px">
+        <span class="disFilter"></span>
+
+      </tzt-filter-item>
+      <tzt-row class="search-condition search-mlZero">
+        <tzt-collapse>
+          <tzt-collapse-item>
+            <template slot="title">
+              <div class="condition-title">
+                <span>筛选</span>
+                <span class="fold-icon"><i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+              </div>
+            </template>
+
+
+
+            <tzt-row class="search-button-box">
+              <tzt-filter-item class="search-button">
+
+              </tzt-filter-item>
+            </tzt-row>
+          </tzt-collapse-item>
+        </tzt-collapse>
+
+
+      </tzt-row>
+    </tzt-form>
+  </tzt-col>
+  
+  
+  
+  
+  {{msg}} <br />
   {{msg}} <br />
   {{age}} <br />
   {{like.play}} <br />

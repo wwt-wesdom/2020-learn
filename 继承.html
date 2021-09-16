@@ -6,7 +6,7 @@
 </head>
 <body>
 <script>
-  function Father(name) {
+  /*function Father(name) {
     this.name = name;
   }
   Father.prototype.sayHi = function () {
@@ -26,7 +26,62 @@
   console.log(Child.prototype);
 
   let c1 = new Child('tom', 12);
-  let c2 = new Child('Jim', 15);
+  let c2 = new Child('Jim', 15);*/
+
+  /**
+   * 组合式继承，继承实例属性和原型属性
+   */
+  function Person(obj) {
+    this.name = obj.name;
+    this.age = obj.age;
+  }
+
+  Person.prototype.add = function (value) {
+    console.log(value);
+  };
+
+
+  let p1 = new Person({name: 'lyf', age: 18});
+  
+  function Person1(obj) {
+    Person.call(this, obj);
+    this.sex = obj.sex
+  }
+
+  // 创建空对象，空对象的原型为Person.prototype
+  // 将改对象的值赋值给Person1.prototype, Person1.prototype.constructor = Person
+  Person1.prototype = Object.create(Person.prototype);
+  Person1.prototype.constructor = Person1;
+
+  Person1.prototype.play = function(value){
+    console.log(value)
+  };
+
+
+  let p2 = new Person1({name:"鸡蛋", age: 118, sex: "男"});
+
+  class People {
+    constructor(obj) {
+      this.name = obj.name;
+      this.age = obj.age;
+    }
+    eat() {
+      console.log(`${this.name}, 爱吃火龙果`);
+    }
+  }
+
+  let p3 = new People({name: '刘亦菲', age: 18});
+
+  class Woman extends People{
+    constructor(obj) {
+      super(obj)
+    }
+    eat() {
+      super.eat();
+    }
+  }
+
+  let p4 = new Woman({name: '杨幂', age: 18})
 
 </script>
 </body>

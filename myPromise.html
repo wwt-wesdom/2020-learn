@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style></style>
+</head>
+<body>
+<script>
+  class MyPromise {
+    callBacks = [];
+    state = 'pending';
+    value = null;
+    constructor(fn) {
+      fn(this._resolve.bind(this), this._reject.bind(this))
+    }
+    then(onFulfilled, onRejected) {
+      console.log('then');
+      return new MyPromise((resolve, reject) => {
+        this._handle({
+          onFulfilled: onFulfilled || null,
+          onRejected: onRejected || null,
+          resolve: resolve,
+          reject: reject
+        });
+      })
+    }
+
+    _handle(callback) {
+      console.log('_handle');
+      if (this.state === 'pending') {
+        this.callBacks.push(callback);
+        return;
+      }
+      let cb = this.state === 'fulfilled' ? callback.onFulfilled : callback.onRejected;
+      if (!cb) {//如果then中没有传递任何东西
+        cb = this.state === 'fulfilled' ? callback.resolve : callback.reject
+        cb(this.value);
+        return;
+      }
+      let ret = cb(this.value);
+      cb = this.state === 'fulfilled' ? callback.resolve : callback.reject;
+      cb(ret);
+    }
+
+    _resolve(value) {
+      console.log('_resolve');
+      if (value && (typeof value === 'object' || typeof value === 'function')) {
+        let then = value.then;
+        if (typeof then === 'function') {
+          then.call(value, this._resolve.bind(this), this._reject.bind(this));
+          return;
+        }
+      }
+      this.state = 'fulfilled';
+      this.value = value;
+      this.callBacks.forEach(callback => this._handle(callback))
+    }
+
+    _reject(error) {
+      console.log('_reject');
+      this.state = 'rejected';
+      this.value = error;
+      this.callBacks.forEach(callback => this._handle(callback));
+    }
+
+  }
+
+  function testPromise() {
+    return new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        if (Date.now()%2 === 0) {
+          resolve('resolve')
+        } else {
+          reject('reject')
+        }
+      }, 2000)
+    })
+  }
+  testPromise().then((res, reject) => {
+    console.log(res, 'resolve');
+    console.log(reject, 'reject');
+  })
+</script>
+</body>
+</html>
