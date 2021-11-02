@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .main {
+      width: 100%;
+      height: 100%;
+    }
+
+    .head {
+      width: 100%;
+      height: 100px;
+      background: yellow;
+    }
+    .content {
+      position: relative;
+      padding: 15px 0 0 0;
+      height: calc(100% - 90px);
+      background-color: #1A1C1C;
+      border-radius: 13px 13px 0  0;
+      margin-top: -10px;
+      color: #fff;
+    }
+    .left {
+      /*background: #343434;*/
+      width: 100px;
+      overflow: scroll;
+      float: left;
+      height: 100%;
+      /*height: calc(100% - 100px);*/
+    }
+    .left div {
+      background: #343434;
+    }
+
+    .right {
+      padding-left: 15px;
+      margin-left: 100px;
+      /*height: calc(100% - 100px);*/
+      overflow: scroll;
+      height: 100%;
+    }
+
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    .left div {
+      line-height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="main">
+  <div class="head"></div>
+  <div class="content">
+    <div class="left">
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+      <div>1111111111</div>
+    </div>
+    <div class="right">
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+      <div>222222222222</div>
+
+    </div>
+  </div>
+</div>
+<script>
+  var left = document.querySelector('.left');
+  left.onclick = function (e) {
+    for (let i = 0; i < left.children.length; i++) {
+      var leftElement = left.children[i];
+      leftElement.setAttribute('style', 'border-radius: 0');
+      leftElement.style.background = '#343434'
+    }
+    var target = e.target;
+    if (target.previousElementSibling) {
+      target.previousElementSibling.setAttribute('style', 'border-radius: 0 0 10px 0')
+      // target.previousSibling.style.borderRadius = '0 0 10px 0'
+    }
+    if (target.nextElementSibling) {
+      target.nextElementSibling.setAttribute('style', 'border-radius: 0 10px 0 0')
+      // target.previousSibling.style.borderRadius = '0 10px 0 0'
+    }
+    e.target.style.background = '#1A1C1C'
+  }
+
+
+  /*
+  var left = document.querySelector('.left');
+  left.onclick = function (e) {
+    for (let i = 0; i < left.children.length; i++) {
+      var leftElement = left.children[i];
+      leftElement.setAttribute('style', 'border-radius: 0');
+      leftElement.style.background = '#343434'
+    }
+    var target = e.target;
+    if (target.previousElementSibling) {
+      target.previousElementSibling.setAttribute('style', 'border-radius: 0 0 10px 0')
+      // target.previousSibling.style.borderRadius = '0 0 10px 0'
+    }
+    if (target.nextElementSibling) {
+      target.nextElementSibling.setAttribute('style', 'border-radius: 0 10px 0 0')
+      // target.previousSibling.style.borderRadius = '0 10px 0 0'
+    }
+    e.target.style.background = '#1A1C1C'
+  }
+*/
+</script>
+</body>
+
+</html>

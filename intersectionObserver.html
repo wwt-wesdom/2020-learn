@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>IntersectionObserver</title>
+  <style>
+    .box {
+      height: 100px;
+      background-color: red;
+    }
+    .green {
+      height: 600px;
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="green">
+
+  </div>
+  <div class="box">
+
+  </div>
+  <script>
+    /*let box = document.querySelector('.box');
+    let io = new IntersectionObserver(callback, );
+    io.observe(box);
+    function callback(e) {
+      console.log(e);
+    }*/
+
+    let nums = [1,1,2,4,5,2,3,5]
+    const newNums = nums.filter((n, i) => {
+      return nums.indexOf(n) === i
+    })
+    console.log(newNums);
+  </script>
+</body>
+</html>
