@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>组合继承</title>
+  <style></style>
+</head>
+<body>
+<script>
+  function Sub() {
+    this.like = ['lol', 'jcc', 'apple']
+  }
+  Sub.prototype.sayHi = function () {
+
+  }
+  function Person(obj) {
+    this.name = obj.name;
+    this.age = obj.age;
+    Sub.call(this)
+  }
+  Person.prototype = new Sub();
+  Person.prototype.constructor = Person
+</script>
+</body>
+</html>
