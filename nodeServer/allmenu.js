@@ -10,12 +10,12 @@ function readDirSync(path){
     var arr = [];
     // 循环遍历当前的文件以及文件夹
     pa.forEach(function(ele,index){
-      var info = fs.statSync(path+"\\"+ele);
+      var info = fs.statSync(path+"/"+ele);
       if(info.isDirectory()){
         // console.log("dir: "+ele)
-        readDirSync(path+"\\"+ele);
+        readDirSync(path+"/"+ele);
       }else{
-        var filePath = path +'\\'+ ele;
+        var filePath = path +'/'+ ele;
         // 找到 .css .html .js 文件
         // let fileNameReg = /\.css|\.js|\.html|\.htm/g;
         let fileNameReg = /\.html|\.htm/g;

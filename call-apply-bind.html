@@ -9,38 +9,40 @@
   let obj = {
     name: 'wwt'
   };
-/*var name = 'window';
-function _call(fn, obj) {
-  obj.fn = fn;
-  obj.fn();
-}
-_call( () => {
-  console.log(this);
-  console.log(this.name);
-}, obj)*/
-Function.prototype.myCall = function (obj = window, ...args) {
-  const symbol = Symbol('symbol'); // 生成唯一的symbol属性
-  obj[symbol] = this; // this为调用maCall的函数
-  const result = obj[symbol](...args);
-  delete obj[symbol];
-  return result;
-};
-Function.prototype.myApply = function (obj = window, ...args) { // 如果不传或传递obj为null 默认为window
-  const symbol = Symbol('symbol'); // 生成唯一的symbol属性
-  obj[symbol] = this; // 给传入的对象绑定属性symbol 值为 当前调用的函数
-  const result = obj[symbol](...args[0]); // 调用函数
-  delete obj[symbol]; // 删除绑定的属性
-  return result; // 返回调用函数的结果g
-};
-function fn(a, b, c) {
-  return {
-    a: a,
-    b: b,
-    c: c
+  /*var name = 'window';
+  function _call(fn, obj) {
+    obj.fn = fn;
+    obj.fn();
   }
-}
-fn.myCall(obj, 1, 2, 3);
-const result = fn.myApply(obj, [2, 5, 8])
+  _call( () => {
+    console.log(this);
+    console.log(this.name);
+  }, obj)*/
+  Function.prototype.myCall = function (obj = window, ...args) {
+    const symbol = Symbol('symbol'); // 生成唯一的symbol属性
+    obj[symbol] = this; // this为调用maCall的函数
+    const result = obj[symbol](...args);
+    delete obj[symbol];
+    return result;
+  };
+  Function.prototype.myApply = function (obj = window, ...args) { // 如果不传或传递obj为null 默认为window
+    const symbol = Symbol('symbol'); // 生成唯一的symbol属性
+    obj[symbol] = this; // 给传入的对象绑定属性symbol 值为 当前调用的函数
+    const result = obj[symbol](...args[0]); // 调用函数
+    delete obj[symbol]; // 删除绑定的属性
+    return result; // 返回调用函数的结果g
+  };
+
+  function fn(a, b, c) {
+    return {
+      a: a,
+      b: b,
+      c: c
+    }
+  }
+
+  fn.myCall(obj, 1, 2, 3);
+  const result = fn.myApply(obj, [2, 5, 8])
 </script>
 </body>
 </html>
