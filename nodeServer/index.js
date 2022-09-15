@@ -44,7 +44,7 @@ const server = http.createServer(function (request, response) {
       response.writeHead(200);
       // 将文件流导向response:
       if (pathname === '/index.html') {
-        fs.readFile(filepath, 'utf-8',function (err, data) {//读取内容
+        fs.readFile(filepath, 'utf-8', function (err, data) {//读取内容
           if (err) throw err;
           // response.writeHead(200, {"Content-Type": "text/html"});//注意这里
           readDirSync(root).then(res => {
@@ -61,7 +61,7 @@ const server = http.createServer(function (request, response) {
               '<body>\n' +
               ' <div>\n' +
               '   <div>首页页面</div>\n' +
-              '   <div id="app"><ul>'+result+'</ul></div>\n' +
+              '   <div id="app"><ul>' + result + '</ul></div>\n' +
               ' </div>\n' +
               '</body>\n' +
               '</html>\n');
@@ -71,8 +71,6 @@ const server = http.createServer(function (request, response) {
       } else {
         fs.createReadStream(filepath).pipe(response);
       }
-
-
     } else {
       // 出错了或者文件不存在:
       // console.log('404 ' + request.url);

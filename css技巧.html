@@ -9,8 +9,12 @@
       width: 100px;
       height: 50px;
       line-height: 50px;
-      background: radial-gradient(circle at bottom left, transparent 25px, rgb(245, 129, 127) 15px);
-      filter: drop-shadow(2px 2px 2px rgba(238, 132, 66, 0.9));
+      /* 右边的圆*/
+      background: radial-gradient(circle at left, transparent 10px, red 0) left no-repeat , radial-gradient(circle at right, transparent 10px, red 0) right no-repeat;
+      background-size: 50% 100%;
+
+      /*filter: drop-shadow(2px 2px 2px rgba(238, 132, 66, 0.9));*/
+
     }
 
     .tip {
@@ -165,7 +169,7 @@
   </style>
 </head>
 <body>
-<div class="circle-square"></div>
+<div class="circle-square">111</div>
 <div class="tip"></div>
 <div class="tip-two"></div>
 <div class="wrapper">

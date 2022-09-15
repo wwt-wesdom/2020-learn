@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style>
+    div:after{
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      content: " ";
+      border-right: 100px solid transparent;
+      border-top: 100px solid #ff0;
+      border-left: 100px solid transparent;
+      /*border-bottom: 100px solid transparent;*/
+    }
+    .box {
+      display: none;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+<div></div>
+<div class="box"></div>
+<script>
+  let dom = document.querySelector('.box')
+  // console.log(dom.clientWidth);
+  try {
+    console.log(222222);
+  } finally {
+    console.log(33333333333);
+  }
+
+  console.log(1111111111);
+
+</script>
+</body>
+</html>
