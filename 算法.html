@@ -92,7 +92,26 @@
 
   console.log(lengthOfLongestSubstring('adfasdflasdfjasldfjasdlf'));
 
+  let arr = [1, 2, 3, 3 ,4, 5, 1, 2, 2, 2, 3, 5, 4, 3, 2, 3, 3, 2, 3, 6]
+  function getNumInArr(arr) {
+    let map = arr.reduce((pre, item) => {
+      if (pre[item] === undefined) {
+        pre[item] = 1
+      } else {
+        pre[item] = pre[item] + 1
+      }
+      return pre
+    }, {})
+    let mapArr = Object.keys(map).map(key => {
+      return {key: key, value: map[key]}
+    })
+    let maxNum = mapArr.sort((a, b) => b.value - a.value)[0].value
+    return mapArr.filter(item => {
+      return item.value === maxNum
+    })
+  }
 
+  console.log(getNumInArr(arr));
 </script>
 
 </body>

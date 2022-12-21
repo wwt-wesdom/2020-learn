@@ -67,12 +67,12 @@
     setTimeout(function(){
       ball.style.left = `${vx * t}px`;
       ball.style.top = `${vy * t + 0.5 * g * t * t}px`;
-    }, 100);
+    }, 16);
     // setTimeout(function(){ document.body.removeChild(ball); }, t * 1000);
   }
 
   function go() {
-    setInterval(createBall, 200)
+    setInterval(createBall, 1000)
   }
 
   var btn = document.querySelector(".button");

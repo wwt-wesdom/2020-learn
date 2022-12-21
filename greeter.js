@@ -10,7 +10,7 @@ var typeName = Type[2];
 console.log(type); // 1
 console.log(typeName); // TEACHER
 function greeter(person) {
-    return "hello " + person.firstName + " " + person.lastName;
+    return "hello ".concat(person.firstName, " ").concat(person.lastName);
 }
 // let user = ["Jane User"];
 var user = {
@@ -89,3 +89,16 @@ function testReadOnly(name) {
 }
 testReadOnly({ name: '小明' });
 document.body.innerHTML = greeter(user);
+var TestFanXing = /** @class */ (function () {
+    function TestFanXing(id, fullName, role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.role = role;
+    }
+    return TestFanXing;
+}());
+var employees = {
+    0: { id: 1, fullName: 'wisdom', role: 'male' },
+    1: { id: 1, fullName: 'xiaoming', role: 'male' },
+    2: { id: 1, fullName: 'xiaoming', role: 'male' }
+};

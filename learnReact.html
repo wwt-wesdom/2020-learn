@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+
+</div>
+<script>
+  function createDOMFromString(string) {
+    let el = document.createElement('div')
+    el.innerHTML = string;
+    return el
+  }
+
+  class Component {
+    constructor(props = {}) {
+      this.props = props
+    }
+    setState(state) {
+      const oldEl = this.el
+      this.state = state
+      this._renderDOM()
+      if (this.onStateChange) this.onStateChange(oldEl, this.el)
+    }
+
+    _renderDOM () {
+      this.el = createDOMFromString(this.render())
+      if (this.onClick) {
+        this.el.addEventListener('click', this.onClick.bind(this), false)
+      }
+      return this.el
+    }
+  }
+
+  class LikeBtn extends Component{
+    constructor(props) {
+      super(props)
+      this.state = {
+        isLiked: false
+      }
+    }
+
+    onClick() {
+      this.setState({
+        isLiked: !this.state.isLiked
+      })
+    }
+
+    render() {
+      return `
+       <button class='like-btn' style="background-color: ${this.props.bgColor}">
+          <span class='like-text'>${this.state.isLiked ? '取消' : '点赞'}</span>
+          <span>👍</span>
+        </button>
+      `
+    }
+  }
+
+  const app = document.getElementById('app'); 　　　　　　　　　　　　　　　　　　　　　　   　　　
+
+  const mount = (component, wrapper) => {
+    wrapper.appendChild(component._renderDOM())
+    component.onStateChange = (oldEl, newEl) => {
+      wrapper.insertBefore(newEl, oldEl);
+      wrapper.removeChild(oldEl)
+    }
+  }
+
+  mount(new LikeBtn({bgColor: 'red'}), app)
+
+</script>
+</body>
+</html>

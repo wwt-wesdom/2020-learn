@@ -23,7 +23,20 @@ function flatArr(arr) {
 function flatArrTwo(arr) {
   return arr.flat(Infinity)
 }
-let arr = flatArr([1,[2,3,[4,5,6]]]);
+function flatArr3(arr) {
+  if (!Array.isArray(arr)) {
+    throw new Error('params is must be array')
+  }
+  return arr.reduce((pre, item) => {
+    if (Array.isArray(item)) {
+      pre = pre.concat(flatArr3(item))
+    } else {
+      pre.push(item)
+    }
+    return pre;
+  }, [])
+}
+let arr = flatArr3([1,[2,3,[4,5,6, [7,8,9], 10], 11], 12]);
 console.log(arr);
 </script>
 </body>

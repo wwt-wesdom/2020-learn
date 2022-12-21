@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap {
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .con {
+      background-color: hotpink;
+      /*左边的没有背景色，右边的加了背景色*/
+      background-image: radial-gradient(10px at 4px 4px,
+      rgba(0, 0, 0, 0),
+      rgba(2, 2, 2, 1));
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      left: 30px;
+      bottom: 30px;
+      z-index: 2;
+    }
+
+    .blc1 {
+      box-shadow: 10px 10px 7px #000;
+      border-radius: 30%;
+      width: 40px;
+      height: 40px;
+      background-color: midnightblue;
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+    }
+
+    .tit {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h3 class="tit">鼠标按下蓄力，松开鼠标小球开始运动</h3>
+  <h1>分数：</h1>
+  <h2>历史最高：</h2>
+  <div class="con"></div>
+  <div class="blc1"></div>
+</div>
+<script>
+  function randomInt(min, max) { //产生[min,max]范围内的整数
+    return Math.round(Math.random() * (max - min)) + min;
+  }
+
+  function randomColor() { //产生随机的颜色
+    var map = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+    var str = '#';
+    for (var i = 0; i < 6; i++) {
+      var index = randomInt(0, 15);
+      str += map[index];
+    }
+    return str;
+  }
+  var wrap = document.querySelector('.wrap');
+  var con = document.querySelector('.con');
+  var oldtime = 0; //记录鼠标按下的时间
+  var timer2 = null; //小球平抛运动定时器
+  var timer3 = null; //鼠标按下变形定时器
+  var num = 0; //游戏成绩
+  var mouseD = false; //记录鼠标是否按下
+  var mouseUp = true; //记录鼠标是否松开
+  var h1 = document.querySelector('h1');
+  var h2 = document.querySelector('h2');
+  var max = localStorage.getItem('max');
+  var div = document.createElement('div'); //创建下一个平台
+  h2.innerText = '历史最高：' + localStorage.getItem('max'); //从浏览器数据库获取最高分
+  div.style.left = 35 + randomInt(30, 60) + 'px'; //初始化平台距离左边的值
+  var div_sex = randomInt(30, 70); //初始化平台大小，范围
+  div.style.bottom = 40 - div_sex / 2 + 'px'; //平台距离底部为小球底部减去平台
+  div.style.height = div_sex + 'px';
+  div.style.width = div_sex + 'px';
+  div.className = 'blc1'; //添加初始化样式
+  div.style.backgroundColor = randomColor(); //随机颜色
+  wrap.appendChild(div); //存入平台
+  document.onmousedown = function () { //监听页面点击事件
+    if (!mouseD) { //如果鼠标按下没有抬起
+      var blc = document.querySelectorAll('.blc1'); //获取所有平台
+      oldtime = Date.now(); //记录鼠标按下的时间
+      var target = blc[blc.length - 2]; //小球所在的平台
+      var down_c = 10; //平台最大下沉距离
+      var left = target.offsetLeft; //记录鼠标按下后下沉效果之前平台的left值
+      var bottom = 40 - target.offsetHeight / 2; //记录鼠标按下后下沉效果之前平台的bottom值
+      var con_l = con.offsetLeft; //记录鼠标按下后下沉效果之前小球的left值
+      var con_b = 30; //记录鼠标按下后下沉效果之前小球的bottom值
+      timer3 = setInterval(() => { //下沉效果定时器
+        down_c -= 0.03; //每一次变化0.03px
+        if (down_c <= 0) { //最小值为0
+          down_c = 0.03;
+        }
+        target.style.boxShadow = down_c + 'px ' + down_c + 'px ' + down_c +
+          'px #000'; //边框阴影向里缩，实现3D效果
+        target.style.left = left + 10 - down_c + 'px';
+        target.style.bottom = bottom + -10 + down_c + 'px';
+        con.style.left = con_l + 10 - down_c + 'px';
+        con.style.bottom = con_b - 10 + down_c + 'px'; //小球和平台一起向右下角移动，配合阴影达到3D效果
+      }, 1);
+      mouseD = true; //鼠标已经按下
+      mouseUp = false; //鼠标即将松开
+    }
+  }
+  document.onmouseup = function () {
+    if (!mouseUp) { //如果没有触发mousedown事件不会执行以下代码
+      mouseUp = true; //锁定事件，小球运动结束前不能执行以下代码
+      clearInterval(timer3); //清除下沉动画
+      var timer4 = null; //上升动画
+      var blc = document.querySelectorAll('.blc1'); //获取所有平台
+      var target = blc[blc.length - 2]; //同下沉动画
+      var left = target.offsetLeft;
+      var down_time = 0;
+      var down_c = 0;
+      var click_time = Date.now() - oldtime; //鼠标按下的时间
+      var bottom = 40 - target.offsetHeight / 2 - (click_time * 0.03 > 10 ? 10 : click_time *
+        0.03); //原来的bottom-下沉的距离，最大为10
+      timer4 = setInterval(() => { //恢复原来的状态
+        down_time++;
+        if (down_time > click_time) {
+          clearInterval(timer4);
+        }
+        down_c += 0.03;
+        if (down_c >= 10) {
+          down_c = 10;
+        }
+        target.style.boxShadow = down_c + 'px ' + down_c + 'px ' + down_c + 'px #000';
+        target.style.left = left - down_c + 'px';
+        target.style.bottom = bottom + down_c + 'px';
+      }, 1);
+      var clicktime = (Date.now() - oldtime) * 1.5; //小球运动时间为鼠标按下的1.5倍，减少蓄力时间
+      var time2 = 0; //小球跳一跳计时器
+      var y = 30; //小球初始bottom值
+      var x = con.offsetLeft; //小球初始left值
+      clearTimeout(tout); //清除延时器
+      timer2 = setInterval(() => { //小球弹跳计时器
+        time2 += 20;
+        y = 30 + clicktime / 50 * Math.sin(time2 * Math.PI /
+          clicktime); //将总的时间分成180份通过sin(0,180)从0到0的特性完成一个圆滑的抛物线
+        con.style.left = x + time2 / 10 + 'px';
+        con.style.bottom = y + 'px';
+      }, 20);
+      var tout = setTimeout(function () { //控制小球运动的时间与鼠标按下的时间*1.5相等，控制小球运动的时间
+        clearInterval(timer2); //结束小球运动
+        x = con.offsetLeft; //获取运动结束后小球的left值
+        var blc = document.querySelectorAll('.blc1'); //获取所有的平台
+        if (con.offsetLeft >= wrap.lastElementChild.offsetLeft && con.offsetLeft <= wrap
+          .lastElementChild.offsetLeft + wrap.lastElementChild.offsetHeight
+        ) { //判断小球是否位于平台里面
+          num += 10; //每跳一次加10分
+          h1.innerText = '分数：' + num; //动态展示分数
+          //生成下一个平台
+          var div_sex2 = randomInt(40, 60);
+          var newdiv = document.createElement('div');
+          newdiv.style.bottom = 40 - div_sex2 / 2 + 'px';
+          newdiv.style.height = div_sex2 + 'px';
+          newdiv.style.width = div_sex2 + 'px';
+          newdiv.style.left = x + randomInt(80, 120) + 'px';
+          newdiv.style.backgroundColor = randomColor();
+          newdiv.className = 'blc1';
+          wrap.appendChild(newdiv);
+        } else {
+          alert('游戏结束,分数：' + num);
+          max = max > num ? max : num;
+          localStorage.setItem('max', max) //更新最高分
+          location.reload(); //刷新当前页面
+        }
+        wrap.scrollLeft = wrap.scrollWidth; //控制滚动条位于最右边
+        mouseD = false; //完成一次事件，重新开启
+        mouseUp = true; //
+      }, clicktime)
+    }
+  }
+</script>
+</body>
+</html>
