@@ -4,15 +4,14 @@ var fs = require("fs");
 
 // 使用异步获取路径
 // 参数是遍历文件的根路径
+var arr = [];
 function readDirSync(path){
   return new　Promise((resolve, reject) => {
     var pa = fs.readdirSync(path);
-    var arr = [];
     // 循环遍历当前的文件以及文件夹
     pa.forEach(function(ele,index){
       var info = fs.statSync(path+"/"+ele);
       if(info.isDirectory()){
-        // console.log("dir: "+ele)
         readDirSync(path+"/"+ele);
       }else{
         var filePath = path +'/'+ ele;
@@ -22,10 +21,13 @@ function readDirSync(path){
         let shouldFormat = fileNameReg.test(filePath);
         if (shouldFormat) {
           // 这里就拿到了符合条件的文件路径，后面就可以根据这个路径来执行相关的操作
-          arr.push(ele)
+          let routerArr = path.split('2020-learn/')
+          let router = routerArr[1] ? routerArr[1] + '/' : ''
+          arr.push(router + ele)
         }
       }
     });
+    console.log(arr);
     resolve(arr)
   })
 }
