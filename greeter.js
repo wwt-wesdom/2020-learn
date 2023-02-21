@@ -88,17 +88,30 @@ function testReadOnly(name) {
     // name.name = '小红'; //  Cannot assign to 'name' because it is a read-only property.
 }
 testReadOnly({ name: '小明' });
+function isNumber(x) {
+    return typeof x === "number";
+}
+console.log(isNumber('234234'));
 document.body.innerHTML = greeter(user);
-var TestFanXing = /** @class */ (function () {
-    function TestFanXing(id, fullName, role) {
-        this.id = id;
-        this.fullName = fullName;
-        this.role = role;
+var SomePoint = /** @class */ (function () {
+    function SomePoint() {
+        this.x = 1;
+        this.y = 2;
+        this.z = false;
     }
-    return TestFanXing;
+    SomePoint.prototype.sayHi = function (name) {
+    };
+    return SomePoint;
 }());
-var employees = {
-    0: { id: 1, fullName: 'wisdom', role: 'male' },
-    1: { id: 1, fullName: 'xiaoming', role: 'male' },
-    2: { id: 1, fullName: 'xiaoming', role: 'male' }
-};
+var somePoint = new SomePoint();
+var Enum1;
+(function (Enum1) {
+    Enum1[Enum1["A"] = 1] = "A";
+    Enum1[Enum1["B"] = 3] = "B";
+    Enum1[Enum1["C"] = 5] = "C";
+    Enum1[Enum1["D"] = 7] = "D";
+})(Enum1 || (Enum1 = {}));
+var a = 1;
+if (a === Enum1.A) {
+    console.log(true);
+}

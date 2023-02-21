@@ -1,3 +1,4 @@
+
 interface Person {
   firstName: string,
   lastName: string,
@@ -106,12 +107,14 @@ interface Interface {
 function testInterface(item: LabelValue) {
   console.log(item.value);
 }
+
 testInterface({label: "小明", value: 0});
 
 // 使用接口表示函数类型
 interface SearchFun {
   (source: string, substring: string): boolean //定义函数的参数和返回值类型
 }
+
 let mySearch: SearchFun;
 // 形参名可以随意取-不一定需要和接口里字段名相同
 mySearch = function (source, subStr) {
@@ -123,6 +126,7 @@ mySearch = function (source, subStr) {
 interface StringArray {
   [index: number]: string // 定义索引和返回值类型
 }
+
 let myArr: StringArray;
 myArr = ['apple', 'origin'];
 let myStr: string = myArr[0];
@@ -130,10 +134,45 @@ let myStr: string = myArr[0];
 function testReadOnly(name: Interface) {
   // name.name = '小红'; //  Cannot assign to 'name' because it is a read-only property.
 }
+
 testReadOnly({name: '小明'});
 
+function isNumber(x: any): x is number {
+  return typeof x === "number";
+}
 
+console.log(isNumber('234234'));
 document.body.innerHTML = greeter(user);
 
+interface Point1 {
+  x: number,
+  y: number,
+  sayHi(name: string): void　
+}
 
+interface Point1 {
+  z: boolean
+}
 
+class SomePoint implements Point1 {
+  x = 1;
+  y = 2;
+  z = false
+  sayHi(name: string): void {
+  }
+}
+
+let somePoint = new SomePoint()
+
+enum Enum1 {
+  A = 1,
+  B = 3,
+  C = 5,
+  D = 7
+}
+
+let a = 1
+if (a === Enum1.A) {
+  console.log(true);
+}
+　　　　　　　　　　　　　　　　　　　

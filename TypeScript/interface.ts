@@ -8,9 +8,7 @@ interface EmployeeValueType {
   role: string
 }
 
-interface StringArray {
-  [key: number]: string,
-}
+
 
 
 let employees: EmployeeKeyType = {
@@ -19,6 +17,9 @@ let employees: EmployeeKeyType = {
   2: {id: 1, fullName: 'xiaoming', role: 'male'},
 }
 
+interface StringArray {
+  [key: number]: string,
+}
 
 let arr1: StringArray = ['1', '2', '3', '4']
 let arr2: number[] = [1, 2, 3, 4]
@@ -26,6 +27,7 @@ let arr3: Array<number> = [1, 2, 3, 4]
 let arr4: [string, string, string] = ['1', '2', '3']
 let arr5 = <StringArray>[]
 arr5 = ['1', '2', '2']
+let arr6: Array<StringArray> = ['1', '2', '3']
 
 interface Point {
   readonly x: number,

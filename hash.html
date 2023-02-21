@@ -16,15 +16,13 @@
   let routerView = routeView
   console.log(routerView);
   window.addEventListener('hashchange', ()=>{
-    let hash = location.hash;
-    routerView.innerHTML = hash
+    routerView.innerHTML = location.hash
   })
   window.addEventListener('DOMContentLoaded', ()=>{
     if(!location.hash){//如果不存在hash值，那么重定向到#/
       location.hash="/"
     }else{//如果存在hash值，那就渲染对应UI
-      let hash = location.hash;
-      routerView.innerHTML = hash
+      routerView.innerHTML = location.hash
     }
   })
 </script>

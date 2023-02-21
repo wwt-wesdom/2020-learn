@@ -35,7 +35,7 @@ const server = http.createServer(function (request, response) {
   // response.writeHead(200, {'Content-Type': 'text/html'});
   // 将HTTP响应的HTML内容写入response:
   // response.end('<h1>Hello world!</h1>');
-  console.log('filepath====', pathname);
+  console.log('pathname====', pathname);
   fs.stat(filepath, function (err, stats) {
     if (!err && stats.isFile()) {
       // 没有出错并且文件存在:
@@ -69,6 +69,8 @@ const server = http.createServer(function (request, response) {
           });
         });
       } else {
+        console.log(filepath);
+        console.log(response);
         fs.createReadStream(filepath).pipe(response);
       }
     } else {

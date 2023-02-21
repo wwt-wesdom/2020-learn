@@ -31,6 +31,11 @@
     return ret instanceof Object ? ret : obj;
   }
 
+  function __new(fn, ...args) {
+    const obj = Object.create(fn.prototype)
+    const ret = fn.apply(obj, args)
+    return ret instanceof Object ? ret : obj
+  }
 
   function myNew(fn, ...args) {
     if(typeof fn !== 'function'){
