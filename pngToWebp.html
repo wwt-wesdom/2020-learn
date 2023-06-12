@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>根据 jpeg、png File 文件对象，获取 webp 格式的 File 文件对象</title>
+</head>
+<body>
+<input type="file" id="inputimg">
+<button type="button" id="toW">To Webp</button>
+<script>
+  /**
+   * 根据 jpeg、png File 文件对象，获取 webp 格式的 File 文件对象
+   * @param {File} imageFile jpeg、png图片文件对象
+   * @returns image/webp File
+   */
+  const getWebpFileByImageFile = imageFile => {
+    const base64ToFile = (base64, fileName) => {
+      let arr = base64.split(','),
+        type = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new File([u8arr], fileName, {
+        type
+      });
+    };
+    return new Promise((resolve, reject) => {
+      const imageFileReader = new FileReader();
+      imageFileReader.onload = function (e) {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = function () {
+          const canvas = document.createElement("canvas");
+          canvas.width = image.width;
+          canvas.height = image.height;
+          canvas.getContext("2d").drawImage(image, 0, 0);
+
+          resolve(base64ToFile(canvas.toDataURL("image/webp"), imageFile.name))
+        }
+      }
+      imageFileReader.readAsDataURL(imageFile)
+    });
+  }
+  // 使用示例
+  document.getElementById('toW').addEventListener('click', async function () {
+    const file = document.getElementById('inputimg').files[0];
+    const wfile = await getWebpFileByImageFile(file);
+    console.log(file, wfile);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>树形结构</title>
+</head>
+<body>
+<script type="module">
+  import pageList from './part.js'
+  import {largeNumber} from "./js/large-number.js";
+
+  console.log(largeNumber);
+  const list = pageList
+  function getTree(arr) {
+    const map = {}
+    arr.forEach(item => {
+      map[item.id] = item;
+    })
+    return arr.reduce((pre, item) => {
+      item.label = item.name
+      let parent = map[item.parentId];
+      if (parent) {
+        (parent.children || (parent.children = [])).push(item)
+      } else {
+        pre.push(item);
+      }
+      return pre
+    }, [])
+  }
+
+  console.log(getTree(list));
+
+  let a = new String('1111')
+  console.log(a );
+  console.log(a instanceof String);
+</script>
+</body>
+</html>

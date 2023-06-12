@@ -43,6 +43,23 @@
 
   fn.myCall(obj, 1, 2, 3);
   const result = fn.myApply(obj, [2, 5, 8])
+
+  Function.prototype._bind = function (obj) {
+    let self = this;
+    let args = [...arguments].slice(1);
+    return function () {
+      let bindArgs = [...arguments]
+      return self.apply(obj, args.concat(bindArgs))
+    }
+  }
+
+  function sum(c, d) {
+    return this.a + this.b + c + d
+  }
+
+  let obj1 = {a: 1, b: 2,}
+  let t = sum._bind(obj1, 3)
+  console.log(t(4));
 </script>
 </body>
 </html>
