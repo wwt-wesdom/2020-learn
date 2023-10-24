@@ -306,9 +306,29 @@
     height: 165,
   }
 
-  Object.defineProperty(obj, 'name', {
-
+ /* Object.defineProperties(window, {
+    _a: {
+      value: 0,
+      writable: true
+    },
+    a: {
+      get() {
+        console.log(_a);
+        return  ++_a
+      }
+    }
   })
+*/
+  const a = {
+    _a: 0,
+    toString() {
+      console.log(a._a);
+      return ++a._a
+    }
+  }
+  if (a == '1' && a == '2' && a == '3') {
+    console.log('llllllllllllll');
+  }
 
 </script>
 </body>

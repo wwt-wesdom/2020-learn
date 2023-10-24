@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function getUser() {
+    return fetch('./js/json.json')
+  }
+
+  function m1() {
+    return getUser()
+  }
+
+  function m2() {
+    return m1()
+  }
+
+  function main() {
+    const res = m2()
+    console.log(res);
+  }
+
+
+  function run(func) {
+    let cache = [];
+    let i = 0;
+    const oldFetch = window.fetch
+    window.fetch = (...args) => {
+      if (cache[i]) {
+        if (cache[i].status === 'fulfilled') {
+          return cache[i].data
+        } else if (cache[i].status === 'rejected'){
+          throw cache[i].error
+        }
+      }
+      const result = {
+        status: 'pending',
+        data: null,
+        error: null,
+      }
+      cache[i++] = result;
+      throw oldFetch(...args).then(resp => resp.json()).then(res => {
+        result.status = 'fulfilled';
+        result.data = res;
+      }, error => {
+        result.status = 'rejected';
+        result.data = error;
+      })
+    }
+
+    try {
+      func();
+    } catch (error) {
+      if (error instanceof Promise) {
+        const reRun = () => {
+          i = 0//重置一下下标
+          func()
+        }
+        error.then(reRun, reRun).finally(() => {
+          window.fetch = oldFetch
+        })
+      }
+    }
+  }
+
+  run(main)
+  setTimeout(() => {
+    run(main)
+  }, 1000)
+</script>
+</body>
+</html>

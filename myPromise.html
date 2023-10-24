@@ -9,7 +9,7 @@
 </head>
 <body>
 <script>
-  class MyPromise {
+ /* class MyPromise {
     callBacks = [];
     state = 'pending';
     value = null;
@@ -82,7 +82,86 @@
   testPromise().then((res, reject) => {
     console.log(res, 'resolve');
     console.log(reject, 'reject');
-  })
+  })*/
+ class MyPromise {
+   static PENDING = 'pending';
+   static FULFILLED = 'fulfilled';
+   static REJECTED = 'rejected';
+   constructor(func) {
+     this.promiseState = MyPromise.PENDING;
+     this.promiseResult = null;
+     this.fulfilledFuncCallback = [];
+     this.rejectedFuncCallback = [];
+     try {
+       func(this.resolve.bind(this), this.reject.bind(this))
+     } catch (err) {
+       this.reject(err)
+     }
+   }
+   resolve(value) {
+     console.log(value);
+     if (this.promiseState === MyPromise.PENDING) {
+       this.promiseState = MyPromise.FULFILLED;
+       this.promiseResult = value;
+       this.fulfilledFuncCallback.forEach(item => {
+         item()
+       })
+     }
+   }
+   reject(reason) {
+     if(this.promiseState === MyPromise.PENDING) {
+       this.promiseState = MyPromise.REJECTED
+       this.promiseResult = reason
+       this.rejectedFuncCallback.forEach(item => {
+         item()
+       })
+     }
+   }
+   then(fulfilledFunc, rejectedFunc) {
+     // 如果是pending状态将回调收集起来
+     if (this.promiseState === MyPromise.PENDING) {
+       if (fulfilledFunc) {
+         this.fulfilledFuncCallback.push(() => {
+           setTimeout(() => {
+             fulfilledFunc(this.promiseResult)
+           })
+         })
+       }
+       if (rejectedFunc) {
+         this.rejectedFuncCallback.push(()=>{
+           setTimeout(() => {
+             rejectedFunc(this.promiseResult);
+           })
+         })
+       }
+     }
+     if (this.promiseState === MyPromise.FULFILLED) {
+       setTimeout(() => {
+         fulfilledFunc(this.promiseResult)
+       })
+     }
+     if (this.promiseState === MyPromise.REJECTED) {
+       setTimeout(() => {
+         rejectedFunc(this.promiseResult)
+       })
+     }
+   }
+ }
+
+ console.log(111);
+ let p1 = new MyPromise((resolve, reject) => {
+   console.log(222);
+   setTimeout(() => {
+     resolve('hello')
+   }, 100)
+ })
+ p1.then(res => {
+   console.log(333);
+   console.log('成功', res);
+ }, reason => {
+   console.log('失败', reason);
+ })
+ console.log(444);
 </script>
 </body>
 </html>

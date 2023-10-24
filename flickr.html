@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flickr</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+  requirejs.config({
+    path: {
+      ramda: 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.13.0/ramda.min.js',
+      jquery: 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+    }
+  })
+
+  require([
+    'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.13.0/ramda.min.js',
+  ], function (_) {
+    let img = function (url) {
+      return $('<img/>', {src: url})
+    };
+    
+    let Impure = {
+      getJSON: _.curry(function (callback, url) {
+        $.getJSON(url, callback)
+      }),
+      setHtml: _.curry(function (sel, html) {
+        $(sel).html(html)
+      })
+    };
+    
+    let trace = _.curry(function (tag, x) {
+      console.log(tag, x);
+      return x
+    });
+    
+    let url = function (t) {
+      return 'https://api.flickr.com/services/feeds/photos_public.gne?tags=' + t + '&format=json&jsoncallback=?';
+    };
+
+    let mediaUrl = _.compose(_.prop('m'), _.prop('media'));
+
+    let srcs = _.compose(_.map(mediaUrl), _.prop('items'));
+
+    let images = _.compose(_.map(img), srcs);
+
+    let renderImages = _.compose(Impure.setHtml("body"), images)
+
+    let app = _.compose(Impure.getJSON(renderImages), url)
+
+    app("cats")
+  })
+</script>
+</body>
+</html>

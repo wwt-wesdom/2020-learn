@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <style>
+    #container {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+
+    #container img {
+      position: absolute;
+      width: 50%;
+    }
+
+  </style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+  const container = document.getElementById('container');
+  const images = [
+    './image/img1.png',
+    './image/img2.jpg',
+    './image/img3.jpg',
+    './image/img4.jpg',
+  ];
+
+  function createImage(img, top, left) {
+    img.style.top = top + 'px';
+    img.style.left = left + 'px';
+    container.appendChild(img);
+    return img
+  }
+
+  function calculatePosition() {
+    const columnCount = 2; // 每行显示的列数
+    const columnWidth = 195; // 每列的宽度
+    const gap = 10; // 图片之间的间隔
+
+    let columnHeights = new Array(columnCount).fill(0);
+    images.forEach((src) => {
+      // const img = createImage(src, top, left);
+      const img = document.createElement('img');
+      img.src = src
+      img.onload = function () {
+        const minHeight = Math.min(...columnHeights);
+        const columnIndex = columnHeights.indexOf(minHeight);
+
+        const top = columnHeights[columnIndex];
+        const left = columnIndex * (columnWidth);
+        console.log(img.height);
+        createImage(img, top, left)
+        columnHeights[columnIndex] = img.height;
+      }
+    });
+  }
+
+  calculatePosition();
+
+  // 监听窗口大小变化事件，重新计算图片位置
+  window.addEventListener('resize', calculatePosition);
+
+</script>
+</body>
+</html>

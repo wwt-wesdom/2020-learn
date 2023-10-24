@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>树</title>
+</head>
+<body>
+<script>
+  const list = [
+    {id: 1, name: '部门1', pid: 0},
+    {id: 5, name: '部门1-2-1', pid: 3},
+    {id: 2, name: '部门1-1', pid: 1},
+    {id: 3, name: '部门1-2', pid: 1},
+    {id: 4, name: '部门1-1-1', pid: 2},
+    {id: 6, name: '部门2', pid: 0},
+    {id: 7, name: '部门2-1', pid: 6},
+    {id: 8, name: '部门3', pid: 0},
+  ]
+
+  /*function getChild(list, result, pid) {
+    for (const item of list) {
+      if (item.pid === pid) {
+        const newItem = {...item, children: []}
+        result.push(newItem)
+        getChild(list, newItem.children, item.id)
+      }
+    }
+  }
+
+  function listToTree(list, pid) {
+    const result = [];
+    getChild(list, result, pid);
+    return result;
+  }
+  let res = listToTree(list, 0)
+  console.log(res);*/
+
+  /*function listTree(list) {
+    const result = [];
+    const itemMap = {};
+    for (const item of list) {
+      const id = item.id;
+      const pid = item.pid;
+      debugger
+      if (!itemMap[id]) {
+        itemMap[id] = {
+          children: []
+        }
+      }
+      itemMap[id] = {
+        ...item,
+        children: itemMap[id]["children"]
+      }
+      const treeItem = itemMap[id];
+      if (pid === 0) {
+        result.push(treeItem)
+      } else {
+        if (!itemMap[pid]) {
+          itemMap[pid] = {
+            children: []
+          }
+        }
+        itemMap[pid].children.push(treeItem)
+      }
+    }
+    return result;
+  }
+
+  console.log(listTree(list, 0));*/
+
+  /* function listToTree(list) {
+     const result = []
+     const treeMap = list.reduce((pre, item) => {
+       pre[item.id] = {
+         ...item,
+         children: []
+       }
+       return pre
+     }, {})
+     for (let i = 0; i < list.length; i++) {
+       const item = list[i];
+       const treeItem = treeMap[item.id]
+       if (item.pid === 0) {
+         result.push(treeItem)
+       } else {
+         treeMap[item.pid].children.push(treeItem)
+       }
+     }
+     return result
+   }
+ */
+  /*const listTree = (list) => {
+    return list.filter(function (parent) {
+      const branchArr = list.filter(child => parent.id === child.pid);
+      parent.children = [];
+      if (branchArr.length > 0) {
+        parent.children = branchArr;
+      }
+      // 只返回第一级的节点
+      return parent.pid === 0
+    });
+  }
+  console.log(listTree(list));*/
+
+
+  const listToTree = (list) => {
+    return list.filter(item => {
+      item.children = list.filter(child => item.id === child.pid)
+      return item.pid === 0
+    })
+  }
+  console.log(listToTree(list));
+</script>
+</body>
+</html>
