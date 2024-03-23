@@ -236,6 +236,7 @@
   }
 
   let r1 = myMap([1, 2, 3], (item, index) => item * 2 + index)
+
   // console.log(r1);
 
   function firstSingleChar(str) {
@@ -257,6 +258,7 @@
     // 补全此处代码
     return str.match(/\S+/g).reverse().join(" ")
   }
+
   console.log(reverseWord("a good   example")); // example good a
 
 
@@ -267,14 +269,57 @@
     }
     return arr
   }
-  let sunArr = [1,2,3,[4,[5,[6]]]];
+
+  let sunArr = [1, 2, 3, [4, [5, [6]]]];
   flatten(sunArr)
   let sunArr1 = [].concat(...sunArr)
   console.log(sunArr1);
 
+  const str1 = 'aabcccccaaa'
 
+  function strFormat(str) {
+    let obj = {}
+    for (let i = 0; i < str.length; i++) {
+      const item = str[i];
+      if (!obj[item]) {
+        obj[item] = 1;
+      } else {
+        obj[item] = obj[item] + 1
+      }
+    }
+    let result = Object.keys(obj).map(key => {
+      return `${key}${obj[key]}`
+    }).join('')
+    return result.length < str.length ? result : str
+  }
 
+  /*function strFormat(str) {
+    let result = '';
+    let count = 1;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === str[i + 1]) {
+        count++
+      } else {
+        result += str[i] + count;
+        count = 1;
+      }
+    }
 
+    return result.length < str.length ? result : str
+  }*/
+
+  console.log(strFormat(str1));
+
+  function singleNumber(nums) {
+    let ans = 0;
+    for (const num of nums) {
+      ans = ans ^ num
+    }
+    return ans
+  }
+
+  let res = singleNumber([1, 2, 5, 7, 1, 2, 5])
+  console.log(res);
 </script>
 
 </body>

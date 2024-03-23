@@ -18,13 +18,20 @@
     console.log(this);
     console.log(this.name);
   }, obj)*/
-  Function.prototype.myCall = function (obj = window, ...args) {
-    const symbol = Symbol('symbol'); // 生成唯一的symbol属性
-    obj[symbol] = this; // this为调用maCall的函数
-    const result = obj[symbol](...args);
-    delete obj[symbol];
-    return result;
+
+  Function.prototype.myCall = function (ctx = window, ...args) {
+    ctx = Object(ctx)
+    const key = Symbol();
+    Object.defineProperty(ctx, key, {
+      value: this,
+      configurable: false,
+      writable: false,
+    })
+    const result = ctx[key](...args);
+    delete ctx[key]
+    return result
   };
+
   Function.prototype.myApply = function (obj = window, ...args) { // 如果不传或传递obj为null 默认为window
     const symbol = Symbol('symbol'); // 生成唯一的symbol属性
     obj[symbol] = this; // 给传入的对象绑定属性symbol 值为 当前调用的函数
@@ -60,6 +67,28 @@
   let obj1 = {a: 1, b: 2,}
   let t = sum._bind(obj1, 3)
   console.log(t(4));
+
+
+  function test1() {
+    console.log(this);
+    return this + 1
+  }
+
+  console.log(test1.myCall(1));
+
+
+  Function.prototype.myBind = function (ctx, ...args) {
+    const fn = this;
+    return function (...subArgs) {
+      const allArgs = [...args, subArgs];
+      if (new.target) {
+        return new fn(...allArgs)
+      } else {
+        return fn.apply(ctx, allArgs)
+      }
+    }
+  }
+
 </script>
 </body>
 </html>

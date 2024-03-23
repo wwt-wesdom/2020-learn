@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图片压缩</title>
+</head>
+<body>
+<label for="quality">图片质量</label><input type="text" id="quality">
+<input id="file" type="file">
+<script>
+  const input = document.getElementById('file');
+
+  function compressImage(file, quality) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function (event) {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          let width = img.width;
+          let height = img.height;
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(blob => {
+            resolve(blob)
+          }, file.type, quality)
+        }
+      }
+    })
+  }
+
+  function blobToDataURI(blob) {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = function (e) {
+        resolve(e.target.result)
+      }
+    })
+  }
+
+  input.addEventListener('change', async function (event) {
+    const file = event.target.files[0];
+    console.log(file);
+    const quality = document.getElementById('quality').value || 0.8;
+    console.log(quality);
+    const compressedImage = await compressImage(file, quality)
+    console.log(compressedImage);
+    const imgUrl = await blobToDataURI(compressedImage)
+    document.body.innerHTML = `<img src="${imgUrl}" alt=""/>`
+  })
+
+</script>
+</body>
+</html>

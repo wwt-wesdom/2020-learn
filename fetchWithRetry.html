@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>fetchWithRetry</title>
+</head>
+<body>
+<script>
+  function fetchWithRetry(url, options, maxRetry = 3) {
+    return new Promise((resolve, reject) => {
+      const doFetch = async (attempt) => {
+        try {
+
+          const response = await fetch(url, options);
+          console.log(attempt);
+          if (response.ok) {
+            resolve(response)
+          } else {
+            throw new Error('Request failed');
+          }
+        } catch (e) {
+          if (attempt < maxRetry) {
+            console.log(`Attempt ${attempt + 1} failed. Retrying...`);
+            await doFetch(attempt + 1);
+          } else {
+            reject(new Error('Max retries exceeded'));
+          }
+        }
+      }
+      doFetch(0)
+    })
+  }
+
+  fetchWithRetry('./js/json.json').then(res => {
+    console.log(res);
+  })
+</script>
+</body>
+</html>

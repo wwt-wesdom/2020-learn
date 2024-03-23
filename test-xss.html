@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./js/xss.js"></script>
+</head>
+<body>
+<pre id="result"></pre>
+<script>
+  let arr = [1,2,3,4, 5]
+  function add(arr, i) {
+    if (i >= arr.length) return 0;
+    return arr[i] + add(arr, ++i)
+  }
+
+  console.log(add(arr, 0));
+</script>
+</body>
+</html>

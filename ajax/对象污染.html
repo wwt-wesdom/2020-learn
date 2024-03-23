@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>对象污染</title>
+</head>
+<body>
+<script>
+  let o = (function () {
+    let obj = {
+      name: 'wwt',
+      age: 18
+    }
+    Object.setPrototypeOf(obj, null)
+    return {
+      get(key) {
+        return obj[key]
+      }
+    }
+  })()
+  Object.defineProperty(Object.prototype, 'hick', {
+    get() {
+      return this
+    }
+  })
+
+  console.log(o);
+  // 实际上是 obj['hick'], 所以this为 obj
+  let obj3 = o.get('hick')
+  console.log(obj3);
+  // obj3.name = 'name被修改了'
+  console.log(o.get('name'));
+  // console.log(o.get('name')); // name被修改了
+</script>
+</body>
+</html>

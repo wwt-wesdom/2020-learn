@@ -146,3 +146,23 @@ function identity<T, U>(value: T, message: U): Identities<T, U> {
 }
 
 identity(68, 'wisdom');
+
+interface Point {
+  x: number,
+  y: number
+}
+
+function sum({x, y}: Point): number {
+  return  x + y
+}
+
+console.log(sum({x: 1, y: 2}));
+
+const hello: string = "Hello vue!"
+function say<T>(arg: T): T {
+  // console.log(arg.length);
+  return arg;
+}
+
+console.log(say(hello));
+

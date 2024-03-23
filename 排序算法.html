@@ -5,7 +5,12 @@
   <title>排序</title>
 </head>
 <body>
+<div style="width: 200px; background-color: red; white-space: normal;">
+  <span></span>
+</div>
 <script>
+  const nums = [3, 2, 1, 4, 5, 9, 7, 8, 6];
+
   // 冒泡排序
   function bubbleSort(arr) {
     console.time('冒泡排序起')
@@ -20,22 +25,87 @@
         }
       }
     }
-
     console.time('冒泡排序终')
     return arr
   }
 
-  let arr1 = [1, 3, 2, 6, 4, 5, 8, 9, 7, 0]
-  let arr2 = bubbleSort(arr1)
-  console.log(arr2)
+  // 快速排序
+  function quickSort(array, left, right) {
+    if (Array.isArray(array) && typeof left === 'number' && typeof right === 'number') {
+      if (left < right) {
+        let x = array[right], i = left-1, temp;
+        for (let j = left; j < right; j++) {
+          if (array[j] <= x) {
+            i++;
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+          }
+        }
+        quickSort(array, left, i-1)
+        quickSort(array, i + 1, right)
+      }
+      return array;
+    }
+  }
+
+  function removeDuplicates(nums) {
+    let slow = 0;
+    for (let fast = 1; fast < nums.length; fast++) {
+      console.log(nums[slow], nums[fast]);
+      if (nums[fast] !== nums[slow]) {
+        slow++;
+        nums[slow] = nums[fast]
+      }
+    }
+    return slow + 1;
+  }
+
+  function selectionSort(nums) {
+    let n = nums.length;
+    // 外循环，未排序区间为 [i, n - 1]
+    for (let i = 0; i < n - 1; i++) {
+      // 内循环，找到未排序区间内的最小元素
+
+      let k = i;
+      for (let j = i + 1; j < n; j++) {
+        if (nums[j] < nums[k]) {
+          k = j // 记录最小元素的索引
+        }
+      }
+      // 数组调换值
+      // [nums[i], nums[k]] = [nums[k], nums[i]]
+      let c = nums[i]
+      nums[i] = nums[k]
+      nums[k] = c;
+      console.log(nums);
+    }
+
+  }
+  
+  function bubbleSort1(nums) {
+    for (let i = nums.length - 1; i > 0; i--) {
+      let flag = false
+      for (let j = 0; j < i; j++) {
+        if (nums[j] > nums[j + 1]) {
+          let tmp = nums[j];
+          nums[j] = nums[j + 1];
+          nums[j + 1] = tmp;
+          flag = true;
+        }
+        console.log(nums);
+      }
+      console.log('===================');
+      if (!flag) {
+        break;
+      }
+    }
+  }
+
+  bubbleSort1(nums)
+  console.log(nums);
 
 
-  const f = x => x + 1
-  const g = x => x * 2
-  let arr3 = [1, 2, 3]
-  let arr4 = arr3.map(x => f(g(x)))
-  console.log(arr4);
-  // ;[1, 2, 3].map(g).map(f)
 </script>
 </body>
 </html>
