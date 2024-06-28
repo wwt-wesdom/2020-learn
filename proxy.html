@@ -23,19 +23,7 @@
   </style>
 </head>
 <body>
-<div class="content">
-  <div class="center">
-    <div class="inner">
-      <div>111111111</div>
-      <div>111111111</div>
-      <div>111111111</div>
-      <div>111111111</div>
-      <div>111111111</div>
-      <div>111111111</div>
-      <div>111111111</div>
-    </div>
-  </div>
-</div>
+
 <script>
   const person = {
     like: 'vuejs'
@@ -93,15 +81,61 @@
   proxy.name = 'vue.js.com'
   // proxy.name = 10
 
-  let set1 = new Set();
-  set1.add(1);
-  set1.add(2);
-  set1.add(3);
-  set1.add(1);
+  const obj1 = {
+    nestedObj: { foo: 'bar' }
+  }
 
-  console.log(set1);
+  const handler = {
+    get(target, prop, receiver) {
+      console.log(prop);
+      const value = Reflect.get(target, prop, receiver)
+      if (typeof value === 'object' && value !== null) {
+        return new Proxy(value, handler)
+      }
+      console.log('get', prop, target[prop])
+      return value
+    },
+    set(target, property, value) {
+      target[property] = value
+      console.log(`Setting property '${property}' to '${value}'`)
+      return true
+    }
+  }
 
-  console.log(set1.size);
+  const proxyObj = new Proxy(obj1, handler)
+  //proxyObj.nestedObj.foo = 'baz'  // 输出: Setting property 'foo' to 'baz'
+  proxyObj.name = 'wwt'
+  console.log(proxyObj.nestedObj);
+
+  let arr = [1,2,3];
+  const iterator = arr[Symbol.iterator]()
+  // let a = iterator.next().value
+  // let b = iterator.next().value
+  // let c = iterator.next().value
+  console.log(arr);
+
+  const obj2 = {
+    a: '1',
+    b: '2',
+    [Symbol.iterator]() {
+      let index = 0;
+      const keys = Object.keys(this);
+      return {
+        next() {
+          if (index < keys.length) {
+            return {
+              done: false,
+              value: obj2[keys[index++]]
+            }
+          }
+          return {done: true, value: undefined}
+        }
+      }
+    }
+  }
+
+  const [a, b] = obj2;
+  console.log(obj2);
 
 
 </script>

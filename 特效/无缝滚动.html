@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
+    .slider {
+      width: 100px;
+      border: 3px solid #45b3e0;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .imgs {
+      display: flex;
+      flex-wrap: nowrap;
+      height: 200px;
+      width: 100%;
+    }
+    .img {
+      flex: 0 0 auto;
+      height: 100%;
+      width: 100%;
+      font-size: 20px;
+      color: white;
+      text-align: center;
+      line-height: 200px;
+    }
+    .img.img-1 {
+      background: red
+    }
+    .img.img-2 {
+      background: blue
+    }
+    .img.img-3 {
+      background: gray
+    }
+    .img.img-4 {
+      background: green
+    }
+    .img.img-5 {
+      background: black
+    }
+
+  </style>
+</head>
+<body>
+<div class="slider">
+  <div class="imgs">
+<!--    <div class="img img-5">5</div>-->
+    <div class="img img-1">1</div>
+    <div class="img img-2">2</div>
+    <div class="img img-3">3</div>
+    <div class="img img-4">4</div>
+    <div class="img img-5">5</div>
+    <div class="img img-1">1</div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  const dom = document.querySelector('.imgs')
+  slider(dom)
+  function slider (el) {
+    const width = el.children[0].offsetWidth
+    const length = getChildren(el).length
+    el.style.transform = `translateX(-${width * 0}px)`
+    el.offsetHeight
+    startSlide(el, width, length)
+  }
+
+  function startSlide (el, width, length) {
+    let i = 1
+    el.style.transition = 'all 1s'
+    el.addEventListener('transitionend', () => {
+      i++
+      // 重置图片位置
+      if (i >= length) {
+        el.style.transition = ''
+        i = 1
+        el.style.transform = `translateX(-${width * 0}px)`
+        el.offsetHeight
+        el.style.transition = 'all 1s'
+      }
+      setTimeout(() => {
+        el.style.transform = `translateX(-${width * i}px)`
+      }, 1000)
+
+    })
+    setTimeout(() => {
+      el.style.transform = `translateX(-${width * i}px)`
+    }, 1000)
+  }
+
+  function getChildren (el) {
+    return [...el.children]
+  }
+</script>
+</html>

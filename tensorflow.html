@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>tensorflow</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+</head>
+<body>
+<div>
+  <img id="image" src="./image/cs3.jpg" alt="">
+</div>
+<script>
+  async function run() {
+    const model = await tf.loadLayersModel('model/model.json');
+    const image = document.getElementById('image');
+    const tensor = tf.browser.fromPixels(image)
+      .resizeNearestNeighbor([224, 224])
+      .toFloat()
+      .expandDims();
+
+    const predictions = model.predict(tensor);
+    const classIndex = predictions.argMax(1).dataSync()[0];
+
+    const classNames = ['class1', 'class2', 'class3']; // 类别名称数组
+    console.log('识别结果为：', classNames[classIndex]);
+  }
+
+  run()
+</script>
+</body>
+</html>

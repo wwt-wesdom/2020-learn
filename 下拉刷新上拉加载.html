@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>下拉刷新上拉加载</title>
+  <style>
+    #box {
+      padding: 0 20px;
+    }
+    #box .box-item{
+      width: 100%;
+      height: 200px;
+      background-color: #006e33;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    #refreshText {
+      text-align: center;
+      font-size: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div id="refreshText"></div>
+  <div id="box">
+  </div>
+</body>
+
+<script>
+  let clientHeight  = document.documentElement.clientHeight; //浏览器高度
+  let box = document.getElementById('box');
+  let _refreshText  = document.getElementById('refreshText'),
+    _startPos = 0,
+    _transitionHeight = 0,
+    _initScroll = false;
+
+  init()
+
+  window.addEventListener('scroll', (event) => {
+    let scrollHeight = document.body.scrollHeight;
+    let scrollTop = document.documentElement.scrollTop;
+
+    let distance = 50;  //距离视窗还用50的时候，开始触发；
+
+    if ((scrollTop + clientHeight) >= (scrollHeight - distance)) {
+      let res = ''
+      for (let i = 0; i < 10; i++) {
+        res += `<div class="box-item">${i}</div>`
+      }
+      box.insertAdjacentHTML('beforeend', res)
+    }
+  })
+
+  function init() {
+    console.log(11111);
+    _refreshText.innerText = '';
+    _initScroll = false;
+    box.innerHTML = '';
+    let res = ''
+    for (let i = 0; i < 10; i++) {
+      res += `<div class="box-item">${i}</div>`
+    }
+    box.insertAdjacentHTML('beforeend', res)
+  }
+
+
+  box.addEventListener('touchstart', function (e) {
+    _startPos = e.touches[0].pageY;
+    box.style.position = 'relative';
+    box.style.transition = 'transform 0s';
+  }, false);
+
+  box.addEventListener('touchmove', function(e) {
+    // e.touches[0].pageY 当前位置
+    _transitionHeight = e.touches[0].pageY - _startPos; // 记录差值
+
+    if (_transitionHeight > 0 && _transitionHeight < 60) {
+      _refreshText.innerText = '下拉刷新';
+      box.style.transform = 'translateY('+_transitionHeight+'px)';
+
+      if (_transitionHeight > 55) {
+        _initScroll = true;
+        _refreshText.innerText = '释放更新';
+      }
+    }
+  }, false);
+
+  box.addEventListener('touchend', function(e) {
+    box.style.transition = 'transform 0.2s ease';
+    box.style.transform = 'translateY(0px)';
+    _refreshText.innerText = '更新中...';
+    if (_initScroll) {
+      init()
+    } else {
+      _refreshText.innerText = '';
+    }
+  }, false);
+
+</script>
+</html>

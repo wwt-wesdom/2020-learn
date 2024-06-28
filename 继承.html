@@ -5,7 +5,17 @@
   <title>js继承</title>
 </head>
 <body>
-<script>
+<script type="module">
+  import axios from "./js/myAxios.js";
+
+  console.log(axios);
+  /*axios.interceptors.request.use(() => {
+    console.log(111111);
+  })*/
+  axios.get('./js/json.json').then(res => {
+    console.log(res);
+  })
+
   /*function Father(name) {
     this.name = name;
   }
@@ -42,7 +52,7 @@
 
 
   let p1 = new Person({name: 'lyf', age: 18});
-  
+
   function Person1(obj) {
     Person.call(this, obj);
     this.sex = obj.sex
@@ -53,18 +63,19 @@
   Person1.prototype = Object.create(Person.prototype);
   Person1.prototype.constructor = Person1;
 
-  Person1.prototype.play = function(value){
+  Person1.prototype.play = function (value) {
     console.log(value)
   };
 
 
-  let p2 = new Person1({name:"鸡蛋", age: 118, sex: "男"});
+  let p2 = new Person1({name: "鸡蛋", age: 118, sex: "男"});
 
   class People {
     constructor(obj) {
       this.name = obj.name;
       this.age = obj.age;
     }
+
     eat() {
       console.log(`${this.name}, 爱吃火龙果`);
     }
@@ -72,17 +83,17 @@
 
   let p3 = new People({name: '刘亦菲', age: 18});
 
-  class Woman extends People{
+  class Woman extends People {
     constructor(obj) {
       super(obj)
     }
+
     eat() {
       super.eat();
     }
   }
 
   let p4 = new Woman({name: '杨幂', age: 18})
-
 
 
   function Fun1(name) {
@@ -102,6 +113,7 @@
     function fun() {
       console.log(this)
     }
+
     fun()
   }
   const fun1 = new Fun1('tom')
@@ -125,12 +137,47 @@
   let keys = Object.keys(obj)
   console.log(keys);
   let result = []
-  for (let i = 0; i < keys.length; i+=3) {
-    result.push(keys.slice(i, i+3))
+  for (let i = 0; i < keys.length; i += 3) {
+    result.push(keys.slice(i, i + 3))
   }
   console.log(result);
-  console.log(result.slice(0,1)[0]);
-  console.log(result.slice(1));
+
+
+  /**
+   * 寄生式组合继承
+   * @param name
+   * @constructor
+   */
+  function Father(name) {
+    this.name = name;
+  }
+  Father.prototype.sayName = function () {
+    console.log(this.name);
+  }
+  function Son() {
+    Father.apply(this, arguments)
+  }
+  Son.prototype = Object.create(Father.prototype);
+  Son.prototype.constructor = Son;
+  let son = new Son('xiaoming')
+  console.log(son);
+  son.sayName();
+
+  function Person3(name) {
+    if (new.target === Person3) {
+      this.name = name;
+    } else {
+      throw new Error('必须使用 new 命令生成实例');
+    }
+  }
+
+  let obj3 = {}
+  let obj4 = Reflect.construct(Person3, ['red'])
+  console.log(obj4.name);
+
+  var d = Reflect.construct(Date, [1776, 6, 4]);
+  console.log(d instanceof Date); // true
+  console.log(d.getFullYear()); // 1776
 </script>
 </body>
 </html>

@@ -166,3 +166,16 @@ function say<T>(arg: T): T {
 
 console.log(say(hello));
 
+
+// 读取类的实例字段
+class Student {
+  name: string = 'wwt';
+  age: number = 18
+}
+
+type S = keyof InstanceType<typeof Student>
+// type S = keyof Student
+
+let s1: S = "name"
+s1 = 'age'
+

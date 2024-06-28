@@ -7,7 +7,7 @@
 <body>
 <div id="add"></div>
 <button id="btn">add</button>
-<div id="list" style="overflow-y: auto; height: 1000000px">
+<div id="list" style="overflow-y: scroll; height: 500px">
   <p>垃圾的福克斯了多少就发了多少撒旦拉风撒看到发</p>
   <p>垃圾的福克斯了多少就发了多少撒旦拉风撒看到发</p>
   <p>垃圾的福克斯了多少就发了多少撒旦拉风撒看到发</p>
@@ -113,10 +113,12 @@
     tFun(3);
   };
 
-  let list = document.getElementById('list');
-  list.addEventListener('onscroll', function (e) {
+  let fun = throttling((e) => {
     console.log(e);
-  }, true)
+  })
+
+  let list = document.getElementById('list');
+  list.addEventListener('scroll',fun)
 </script>
 </body>
 </html>
