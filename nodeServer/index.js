@@ -17,7 +17,7 @@ const http = require('http');
 const path = require('path');
 const url = require('url');
 const {readDirSync} = require('./allmenu');
-let root = path.resolve('./');
+let root = path.resolve('../');
 
 // let workDir = path.resolve('../'); // . 当前目录， ../上一级目录
 // console.log(workDir);
@@ -72,11 +72,12 @@ const server = http.createServer(function (request, response) {
         fs.createReadStream(filepath).pipe(response);
       }
     } else {
+      console.log(err);
       // 出错了或者文件不存在:
       // console.log('404 ' + request.url);
       // 发送404响应:
       response.writeHead(404);
-      response.end('404 Not Found');
+      response.end('404 Not Found 11111');
     }
   });
 });

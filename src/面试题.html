@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>面试题</title>
+  <script src="../js/large-number.js"></script>
+</head>
+<body>
+<div>
+
+</div>
+<img src="" alt="">
+<script>
+
+  /*var a
+  for(let i=0;i<10;i++) {
+    a = document.createElement('a')
+    a.innerHTML = i + '<br>'
+    a.addEventListener('click', function (e) {
+      console.log(this)  //this为当前点击的<a>
+      e.preventDefault()  //如果调用这个方法，默认事件行为将不再触发。
+      //例如，在执行这个方法后，如果点击一个链接（a标签），浏览器不会跳转到新的 URL 去了。我们可以用 event.isDefaultPrevented() 来确定这个方法是否(在那个事件对象上)被调用过了。
+      alert(i)
+    })
+    const d = document.querySelector('div')
+    d.appendChild(a)  //append向一个已存在的元素追加该元素。
+  }*/
+
+  /*function f1() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1);
+      }, 1000)
+    })
+  }
+
+  function f2() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(2);
+      }, 3000)
+    })
+  }
+
+  function f3() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(3)
+      }, 2000)
+    })
+  }
+
+  Promise.allSettled([f1(), f2(), f3()]).then(res => {
+    console.log(res);
+  })
+
+  function pow(x, n) {
+    if (n === 1) {
+      return x
+    } else {
+      let r = x * pow(x, n - 1)
+      return r
+    }
+
+  }
+
+  let r = pow(2, 5)
+  console.log(r);
+
+  /!**
+   * 尾递归
+   * @param n
+   * @param total
+   * @returns {number|*|number}
+   *!/
+  console.time()
+
+  function factorial(n, total = 1) {
+    if (n === 1) return total;
+    return factorial(n - 1, n * total)
+  }
+
+  console.timeEnd()
+
+  console.log(factorial(5));
+
+  const arr = ['0.1.1', '2.3.3', '0.302.1', '4.2', '4.3.5', '4.3.4.5', '0.5.6'];
+  arr.sort((a, b) => {
+    let i = 0;
+    const arr1 = a.split('.');
+    const arr2 = b.split('.');
+
+    while (true) {
+      const s1 = arr1[i];
+      const s2 = arr2[i++]; // i ++ i先使用后累加
+
+      if (s1 === undefined || s2 === undefined) {
+        return arr2.length - arr1.length;
+      }
+
+      if (s1 === s2) continue;
+
+      return s2 - s1;
+    }
+  });
+
+  console.log(arr)
+
+  var students = {}
+  students[Symbol.iterator] = function () {
+    let index = 1;
+    return {
+      next() {
+        return {done: index > 100, value: index++}
+      }
+    }
+  }
+  console.log(students);
+  for (var i of students) {
+    // console.log(i);
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', './js/part.json', true)
+  xhr.send();
+  xhr.onreadystatechange  = (res) => {
+    // console.log(xhr.responseText);
+  }
+  setTimeout(() => {
+    xhr.abort() // 取消http请求
+  }, 1000)
+
+
+  const controller = new AbortController()
+  void (async function () {
+    const response = await fetch('./js/part.json')
+    const data = await response.json()
+    // console.log(data);
+  })()
+  setTimeout(() => {
+    controller.abort(); // 支持 fetch & axios
+  }, 1000);
+
+
+  // ** 阶乘 2**32 2的32次方
+  let cs= (x,y)=>x+(y-x+1)*crypto.getRandomValues(new Uint32Array(1))[0]/2**32|0
+
+  console.log(cs(0,10))
+
+  let num1 = 10;
+  let num2 = num1.toString(2) // 10进制转2进制
+  let num3 = parseInt('110', 2)// 2进制转10进制
+  console.log(num2);
+  console.log(num3);
+  let re = largeNumber('11111', '22222222222')
+  console.log(re);*/
+
+
+  /*var name = 'window'
+  const obj = {
+    name: 'obj',
+    sayName:function() {
+      console.log(this.name)
+    },
+  }
+  obj.sayMyName = function () {
+    (() => {
+      console.log(this.name)
+    })()
+  }
+  const fn1 = obj.sayName
+  const fn2 = obj.sayMyName
+  fn1()
+  obj.sayName()
+  fn2()
+  obj.sayMyName()*/
+
+
+
+  /*const obj = {
+    name: 'aa',
+    func() {
+      setTimeout(() => {
+        console.log(this.name) //aa
+      }, 0)
+      setTimeout(function () {
+        console.log(this.name) //undefined
+      }, 0)
+    },
+  }
+  obj.func()*/
+
+
+
+
+  // undefined == null，结果是true。且它俩与所有其他值比较的结果都是false。
+  // String == Boolean，需要两个操作数同时转为Number。
+  // String/Boolean == Number，需要String/Boolean转为Number。
+  // Object == Primitive，需要Object转为Primitive(具体通过valueOf和toString方法)。
+
+  /*const p1 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('resolve3');
+      console.log('timer1')
+    }, 0)
+    resolve('resolve1');
+    resolve('resolve2');
+  }).then(res => {
+    console.log(res)
+    setTimeout(() => {
+      console.log(p1)
+    }, 1000)
+    return 1
+  }).finally(res => {
+    console.log('finally', res)
+  })
+*/
+/*  async function testSometing() {
+    console.log("执行testSometing");
+    return "testSometing";
+  }
+
+  async function testAsync() {
+    console.log("执行testAsync");
+    return Promise.resolve("hello async");
+  }
+
+  async function test() {
+    console.log("test start...");
+    const v1 = await testSometing();
+    console.log(v1);
+    const v2 = await testAsync();
+    console.log(v2);
+    console.log(v1, v2);
+  }
+
+  test();
+
+  var promise = new Promise(resolve => {
+    console.log("promise start...");
+    resolve("promise");
+  });
+  promise.then(val => console.log(val));
+
+  console.log("test end...");
+
+  function Person(name) {
+    this.name = name
+  }
+  Person.prototype = {
+    play() {
+      console.log(this.name + ' playing basketball');
+    }
+  }
+
+  let p1 = new Person('dog');
+  p1.play()
+  console.log(Object.getPrototypeOf(p1));*/
+
+  // 思路是使用递归函数，不断地去执行 setTimeout 从而达到 setInterval 的效果
+
+  function mySetInterval(fn, timeout) {
+    // 控制器，控制定时器是否继续执行
+    var timer = {
+      flag: true
+    };
+
+    // 设置递归函数，模拟定时器执行。
+    function interval() {
+      if (timer.flag) {
+        fn();
+        setTimeout(interval, timeout);
+      }
+    }
+
+    // 启动定时器
+    setTimeout(interval, timeout);
+
+    // 返回控制器
+    return timer;
+  }
+
+  function fn() {
+    console.log(111);
+  }
+  // mySetInterval(fn, 2000)
+
+
+
+  const obj = {
+    getArrow() {
+      return () => {
+        console.log(this === obj);
+      };
+    }
+  }
+  obj.getArrow()()
+
+  console.log(isNaN('asdfasdf'));
+  console.log(Number.isNaN('asdfasfd'));
+
+
+  const obj1 = {
+    name: 'mqr',
+    age: 22,
+    height: 165,
+  }
+
+ /* Object.defineProperties(window, {
+    _a: {
+      value: 0,
+      writable: true
+    },
+    a: {
+      get() {
+        console.log(_a);
+        return  ++_a
+      }
+    }
+  })
+*/
+  const a = {
+    _a: 0,
+    toString() {
+      console.log(a._a);
+      return ++a._a
+    }
+  }
+  if (a == '1' && a == '2' && a == '3') {
+    console.log('llllllllllllll');
+  }
+
+</script>
+</body>
+</html>

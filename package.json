@@ -1,0 +1,23 @@
+{
+  "name": "2020-learn",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node ./nodeServer/index"
+  },
+  "author": "",
+  "license": "ISC",
+  "main": "greeter.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wwt-wesdom/2020-learn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wwt-wesdom/2020-learn/issues"
+  },
+  "homepage": "https://github.com/wwt-wesdom/2020-learn#readme",
+  "dependencies": {
+    "execa": "^4.0.0"
+  }
+}

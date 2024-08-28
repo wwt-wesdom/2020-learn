@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <embed src="../audio/muisc.mp3" hidden="true" autostart="true" loop="true">
+  <style>
+    .slider {
+      position: relative;
+      width: 300px;
+      height: 50px;
+      background-color: #eee;
+      color: #333;
+      text-align: center;
+      line-height: 50px;
+    }
+    .slider-active {
+      height: 100%;
+      width: 0;
+      background-color: red;
+    }
+    .touch-box {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 50px;
+      width: 50px;
+      background-color: blue;
+    }
+    .finish {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 50px;
+      width: 50px;
+      display: none;
+      background-color: yellow;
+      text-align: center;
+      line-height: 50px;
+      color: #000;
+    }
+    .slider-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="slider-content">滑动模块</div>
+    <div class="slider-active" id="sliderActive"></div>
+    <div class="touch-box" id="touch-box"></div>
+    <div class="finish" id="finish">完成</div>
+  </div>
+  <audio src="../audio/muisc.mp3" controls="controls" autoplay="autoplay">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    function sliderMove() {
+      let start = 0;
+      let end = 0;
+      let touchBox = document.getElementById('touch-box');
+      let finish = document.getElementById('finish');
+      let sliderActive = document.getElementById('sliderActive');
+      let sliderContent = document.getElementsByClassName('slider-content')[0];
+      let startFun = function(e) {
+        start = e.targetTouches[0].clientX;
+      };
+      let moveFun = function (e) {
+        let move = e.changedTouches[0].clientX;
+        let endX = (move - start);
+        if (endX >= 250) {
+          endX = 250;
+        } else if (endX <= 0) {
+          endX = 0;
+        }
+        sliderActive.style.width = endX + 'px';
+        touchBox.style.left = endX + 'px';
+      };
+      let endFun = function(e) {
+        end = e.changedTouches[0].clientX - start ;
+        if (end >= 250) {
+          end = 250;
+          touchBox.style.display = ' none';
+          finish.style.display = 'block';
+          sliderContent.style.color = '#fff'
+        } else if (end <= 0) {
+          end = 0;
+        } else if (0 < end < 250) {
+          end = 0;
+          touchBox.style.left = 0 + 'px';
+          sliderActive.style.width = 0 + 'px';
+        }
+      };
+      touchBox.addEventListener('touchstart', startFun);
+      touchBox.addEventListener('touchmove', moveFun);
+      touchBox.addEventListener('touchend', endFun);
+    }
+    sliderMove();
+  </script>
+</body>
+</html>

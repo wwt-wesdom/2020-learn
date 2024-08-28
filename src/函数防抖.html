@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>函数防抖</title>
+</head>
+<body>
+<div>
+    <input type="text" id="input"/>
+</div>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script>
+    const input = document.querySelector('#input');
+    const debounce = function (func, delay) {
+        let timer = null
+
+        return function (...args) {
+            clearTimeout(timer)
+
+            timer = setTimeout(() => {
+                func.apply(this, args)
+            }, delay)
+        }
+    }
+
+    // 测试
+    // html部分
+    // js部分
+    const showName = debounce(function (name) {
+        console.log(input.value, this, name)
+    }, 500)
+
+
+    input.addEventListener('input', (e) => {
+        // 500ms内停止输入才会输出
+        showName.call({ name: '前端胖头鱼' }, '前端胖头鱼')
+    })
+</script>
+</body>
+</html>

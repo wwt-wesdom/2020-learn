@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<video src=""></video>
+<script>
+  async function getMedia() {
+    const constraints = {
+      video: true,
+      audio: true
+    };
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints)
+      document.querySelector('video').srcObject = stream
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  // getMedia()
+
+
+  async function enumerateDevices() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      console.log(devices);
+      this.videoinputs = devices.filter(device => device.kind === 'videoinput');
+      this.audiooutputs = devices.filter(device => device.kind === 'audiooutput');
+      this.audioinputs = devices.filter(device => device.kind === 'audioinput');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  enumerateDevices()
+</script>
+</body>
+</html>
