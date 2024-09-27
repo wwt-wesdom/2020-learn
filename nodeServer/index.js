@@ -17,7 +17,8 @@ const http = require('http');
 const path = require('path');
 const url = require('url');
 const {readDirSync} = require('./allmenu');
-let root = path.resolve('../');
+let root = path.resolve('./');
+console.log(root);
 
 // let workDir = path.resolve('../'); // . 当前目录， ../上一级目录
 // console.log(workDir);
