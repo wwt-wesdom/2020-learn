@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>精确到两位小数</title>
+</head>
+<body>
+<script>
+  let num = 80.81
+  // let num = 8001
+  num = formatFloat(num, 3);	//替换num即可，整一大段代码都需要写哦
+  console.log(num);
+
+  // num为传入的值，n为保留的小数位
+  /*function formatFloat(num,n = 2){
+    num = parseFloat(num)
+    console.log(num);
+    if(isNaN(num)){
+      return false;
+    }
+    num = Math.round(num  *　Math.pow(10, n))/Math.pow(10, n); // n幂
+    let s = num.toString();
+    let rs = s.indexOf('.');
+    //判定如果是整数，增加小数点再补0
+    if(rs < 0){
+      s += '.';
+      rs = s.length;
+    }
+    while(s.length < rs + n){
+      s += '0';
+    }
+    return s;
+  }*/
+
+  function formatFloat(num, n = 2) {
+    if(isNaN(num)){
+      return false;
+    }
+    let s = num.toString();
+    let rs = s.indexOf('.');
+    if (rs > 0) {
+      let int = s.slice(0, rs + 1)
+      let fraction = s.slice(rs + 1)
+      if (fraction.length > n) {
+        fraction = fraction.slice(0, n + 1) + '1'
+      }
+      return Number(int + fraction).toFixed(n)
+    }
+    return num.toFixed(n)
+  }
+</script>
+</body>
+</html>
