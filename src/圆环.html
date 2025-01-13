@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="200" height="200"></canvas>
+<script>
+  //canvas 倒计时
+  var canvas2 = document.getElementById("canvas");
+  c2 = canvas2.getContext("2d");
+  //起始一条路径 底部不动的环
+  c2.beginPath();
+  c2.lineWidth = 14;
+  c2.strokeStyle = '#ffffff4d';
+  c2.arc(68, 68, 60, 0, 2 * Math.PI);
+  c2.stroke();
+  //绘制当前进度
+  function jdt(x) {
+    // 进度条
+
+    // c2.save();
+    c2.clearRect(0, 0, 146, 146);
+    //
+    //起始一条路径
+    c2.beginPath();
+    c2.lineWidth = 14;
+    c2.strokeStyle = '#ffffff4d';
+    c2.arc(68, 68, 60, 0, 2 * Math.PI);
+    c2.stroke();
+    //
+    c2.beginPath();
+    c2.lineWidth = 14;
+    c2.strokeStyle = '#FEAD43';
+    c2.lineCap = "round";
+    c2.arc(68, 68, 60, -90 * Math.PI / 180, (x * 3.6 - 90) * Math.PI / 180);
+    c2.stroke();
+  }
+  //倒计时部分最好用div 不是用canvas
+
+  function djs(y) {
+    $(".canvas-djs").html(y)
+  }
+
+
+  //进度条方法参数 秒
+  function f1(x) {
+    clearInterval(a);
+    clearInterval(b);
+    var x1 = x;
+    var t1 = 0;
+    totalTime = x;
+    a = setInterval(function () {
+      t1 = t1 + 0.1;
+      if (t1 >= 100) {
+        clearInterval(a);
+        clearInterval(b);
+        djs("00:00");
+        jdt(100);
+      } else {
+        jdt(t1)
+      }
+    }, x1);
+    var text = x;
+    tm = leftTimer(text);
+    djs(tm)
+    b = setInterval(function () {
+      text = text - 1;
+      if (text <= 0) {
+        clearInterval(b);
+        clearInterval(a);
+        jdt(100);
+        djs("00:00");
+
+      } else {
+        tm = leftTimer(text);
+        djs(tm)
+      }
+    }, 1000);
+
+  }
+
+  //时间格式转化
+  function leftTimer(t) {
+    var leftTime = (t); //计算剩余的秒数
+    var minutes = parseInt(leftTime / 60 % 60, 10);//计算剩余的分钟
+    var seconds = parseInt(leftTime % 60, 10);//计算剩余的秒数
+    minutes = checkTime(minutes);
+    seconds = checkTime(seconds);
+    function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    return minutes + ":" + seconds;
+  }
+</script>
+</body>
+</html>

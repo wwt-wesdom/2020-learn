@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>canvas环形进度条最新</title>
+  <style>
+    body {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    #canvas {
+      background: #f6f6f6;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+<button id="btn">restart</button>
+<script>
+  let canvas = document.getElementById('canvas')
+  let ctx = canvas.getContext('2d')
+  let precent = 100,
+    num = 0
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 80;
+  const strokeWidth = 20;
+  let durationV = 5000
+  let stop = false;
+  let gameEnd = false;
+
+  let startAngle = -Math.PI / 2; // 12 o'clock position
+  let endAngle = -2.5 * Math.PI; // Full circle
+
+  const gradient = ctx.createConicGradient(startAngle, 160, 100);
+  gradient.addColorStop(0, '#FF9B57');
+  gradient.addColorStop(1, "#FFCB90");
+
+  function options(color, x, y, radius, start, end, order) {
+    ctx.save()
+    ctx.beginPath()
+    ctx.lineCap = 'round'
+    ctx.lineWidth = 10
+    ctx.strokeStyle = color
+
+    ctx.arc(x, y, radius, start, end, order) //x坐标,y坐标,半径,起始角,结束角,顺时针/逆时针
+    ctx.stroke()
+    ctx.closePath()
+    ctx.restore()
+  }
+
+
+  function draw() {
+    num += 1
+    if (num < precent) draw()
+    else num = precent
+    // ctx.clearRect(0, 0, 300, 300)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    options(gradient, 150, 150, 100, startAngle, startAngle + ((2 * num) / 100) * Math.PI) //绘制进度环
+  }
+  draw()
+
+  function drawCircle(start, end) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    options(gradient, 150, 150, 100, start, end, true) //绘制进度环
+  }
+  // drawCircle(startAngle, endAngle)
+
+
+  function animateCountdown(duration) {
+    durationV = duration
+    const startTime = Date.now();
+    const endTime = startTime + duration;
+
+    function update() {
+      const now = Date.now();
+      const remainingTime = endTime - now;
+      if (remainingTime <= 0 || stop) {
+        drawCircle(startAngle, startAngle); // Clear the circle
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        restart();
+        return;
+      }
+      if (gameEnd) return;
+      const fractionRemaining = remainingTime / duration;
+      const currentEndAngle = startAngle + (endAngle - startAngle) * fractionRemaining;
+      drawCircle(startAngle, currentEndAngle);
+
+      requestAnimationFrame(update);
+    }
+
+    update();
+  }
+
+  animateCountdown(5000); // 5 seconds countdown
+
+  let btn = document.getElementById('btn')
+  btn.addEventListener('click', () => {
+    stopGame(true);
+  })
+
+  function restart(stopGame = false) {
+    stop = true;
+    num = 0;
+    gameEnd = stopGame;
+    draw()
+    stop = false;
+    animateCountdown(5000)
+  }
+
+  function stopGame() {
+    stop = true;
+    num = 0;
+    gameEnd = true;
+    draw();
+    stop = false;
+    animateCountdown(5000)
+  }
+
+  function calculateYield(list) {
+    let res = list.reduce((all, curr) => (all * (1 + curr / 100)), 1);
+    console.log(((res - 1) * 100).toFixed(2));
+  }
+
+</script>
+</body>
+</html>

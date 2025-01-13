@@ -1,0 +1,95 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .countdown-ring {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      stroke-dasharray: 283; /* 圆周长 */
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      /*animation: countdown 10s linear forwards;*/
+    }
+
+
+    @keyframes countdown {
+      from {
+        stroke-dashoffset: 0;
+      }
+      to {
+        stroke-dashoffset: -283; /* 完全隐藏圆环 */
+      }
+    }
+  </style>
+</head>
+<body>
+<svg width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    &lt;!&ndash; 定义线性渐变 &ndash;&gt;
+    <linearGradient id="linearGradient" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#FFCB90;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF9B57;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle class="countdown-ring"
+          cx="100" cy="100" r="45"
+          fill="none" stroke="url(#linearGradient)"
+          stroke-width="10"/>
+</svg>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<style>
+  #countdownCanvas {
+
+  }
+</style>
+<body>
+<canvas id="countdownCanvas" width="200" height="200"></canvas>
+
+<script>
+  const canvas = document.getElementById('countdownCanvas');
+  const ctx = canvas.getContext('2d');
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 70;
+
+  let count = 5; // 倒计时5秒
+  let angle = 0; // 起始角度
+  let timer; // 计时器
+
+  function drawCircle(count) {
+    ctx.beginPath();
+    var endAngle = (Math.PI * 2) / 5 * count; // 每次调用增加约2度
+    ctx.arc(centerX, centerY, radius, 0, endAngle);
+    var g = ctx.createLinearGradient(-0.5 * Math.PI, count, 180, 0); //创建渐变对象  渐变开始点和渐变结束点
+    g.addColorStop(0, '#FFCB90'); //添加颜色点
+    g.addColorStop(1, '#FF9B57'); //添加颜色点
+    ctx.strokeStyle = g; //使用渐变对象作为圆环的颜色
+    ctx.lineWidth = 10;
+    ctx.stroke();
+  }
+  drawCircle(5)
+  function drawCountdown() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    countdownTimer = setInterval(function() {
+      if (count > 0) {
+        count--;
+        console.log("倒计时：" + count)
+        drawCircle(5 - count);
+      } else {
+        clearInterval(countdownTimer);
+      }
+    }, 1000);
+
+  }
+ drawCountdown()// 开始倒计时
+</script>
+
+</body>
+</html>

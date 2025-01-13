@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .content {
+      height: 2000px; /* For scrolling purposes */
+      padding: 20px;
+    }
+
+    .trigger-element {
+      margin-bottom: 500px; /* Space to ensure scrolling is needed */
+      font-size: 20px;
+      color: #333;
+    }
+
+    .animate-element {
+      margin-top: 100px; /* Initial position */
+      padding: 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .animate-element.animate {
+      transform: translateY(-30px);
+    }
+  </style>
+</head>
+<body>
+<div style="height: 1000px; background-color: red;">
+
+</div>
+<div class="content">
+  <div class="trigger-element">Scroll down to see the animation</div>
+  <div class="animate-element">This element will move up when in viewport</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const animateElement = document.querySelector('.animate-element');
+    const observerOptions = {
+      root: null, // null means the viewport is the root
+      rootMargin: '0px',
+      threshold: 0.1 // Trigger when 10% of the element is in the viewport
+    };
+
+    const observerCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateElement.classList.add('animate');
+          observer.unobserve(animateElement); // Stop observing once animated
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    observer.observe(animateElement);
+  });
+</script>
+</body>
+</html>
