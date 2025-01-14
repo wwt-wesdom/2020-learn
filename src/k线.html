@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 ECharts 文件 -->
+</head>
+<body style="height: 100%; margin: 0">
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="height: 500px; background-color: red;"></div>
+<script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
+
+<script type="text/javascript">
+  var myChart = echarts.init(document.getElementById('main'));
+
+  var option = {
+      title: {
+          text: 'ECharts 示例',
+          show: false
+      },
+      // 隐藏图例
+      legend: {
+          data:['销量'],
+          show: false
+      },
+      grid: {
+          top: '0', // 控制上方留白，根据实际情况调整
+          left: '0',
+          right: '0',
+          bottom: '0',
+          // show: true,
+          // height: '100%',
+          // containLabel: true
+      },
+      xAxis: {
+          type: 'category',
+          show: true,
+          boundaryGap: true,
+          data: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+
+      },
+      yAxis: {
+          show: false,
+          type: 'value',
+          max: 390,
+          min: -100
+      },
+      series: [
+          {
+              type: 'bar',
+              data: [-100, 52, 200, 334, 390, 330, 220]
+          }
+      ],
+  };
+
+  myChart.setOption(option);
+</script>
+</body>
+</html>

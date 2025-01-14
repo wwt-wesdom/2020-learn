@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="main" style="height: 500px; background-color: red;"></div>
+<script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
+<script>
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('main'));
+
+  // 指定图表的配置项和数据
+  var option = {
+    title: {
+      text: '双Y轴示例'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['数据1', '数据2']
+    },
+    grid: [
+      {
+        show: false,
+        top: 0,
+        left: 0,
+        right: 0,
+        borderWidth: 1,
+        borderColor: "#EEF1F5",
+        containLabel: true
+      },
+    ],
+    xAxis: {
+      type: 'category',
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    },
+    yAxis: [
+      {
+        name: '数据1单位',
+        type: 'value',
+        position: 'left',
+        alignTicks: true,
+        axisLine: {show: true},
+        axisLabel: {formatter: '{value} 单位'}
+      },
+      {
+        name: '数据2单位',
+        type: 'value',
+        position: 'right',
+        alignTicks: true,
+        axisLine: {show: true},
+        axisLabel: {formatter: '{value} 单位'}
+      }
+    ],
+    series: [
+      {
+        name: '数据1',
+        type: 'bar',
+        data: [120, 200, 150, 80, 70, 110, 130],
+        yAxisIndex: 0 // 使用左侧Y轴
+      },
+      {
+        name: '数据2',
+        type: 'line',
+        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6],
+        yAxisIndex: 1 // 使用右侧Y轴
+      }
+    ]
+  };
+
+  // 使用刚指定的配置项和数据显示图表
+  myChart.setOption(option);
+</script>
+</body>
+</html>
